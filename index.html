@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>MRI 撮像マニュアル</title>
 <style>
 :root{
   --blue:#1e3a6e;--blue2:#2563eb;--blue-lt:#eff6ff;--blue-bd:#bfdbfe;
   --seq:#0891b2;--cut:#059669;--amber:#d97706;--amber-lt:#fffbeb;--amber-bd:#fcd34d;
+  --red:#dc2626;--red-lt:#fef2f2;--red-bd:#fecaca;
   --gray1:#f8fafc;--gray2:#f1f5f9;--gray3:#e2e8f0;--gray4:#94a3b8;
   --gray5:#64748b;--gray6:#374151;--text:#1e293b;
   --radius:12px;--radius-sm:8px;--touch:52px;
@@ -18,32 +18,36 @@
 html,body{height:100%;overflow:hidden}
 body{font-family:'Hiragino Kaku Gothic ProN','Hiragino Sans',Meiryo,sans-serif;background:var(--gray2);color:var(--text);display:flex;flex-direction:column}
 
-/* login screen */
+/* login */
 .login-screen{position:fixed;inset:0;background:var(--blue);display:flex;align-items:center;justify-content:center;z-index:500;padding:2rem}
-.login-box{background:#fff;border-radius:20px;padding:2.5rem 2rem;width:100%;max-width:380px;text-align:center}
+.login-box{background:#fff;border-radius:20px;padding:2.5rem 2rem;width:100%;max-width:400px;text-align:center}
 .login-box h2{font-size:22px;font-weight:600;color:var(--blue);margin-bottom:6px}
 .login-box p{font-size:14px;color:var(--gray5);margin-bottom:24px}
-.login-box input{width:100%;font-size:18px;padding:14px 16px;border:2px solid var(--gray3);border-radius:var(--radius-sm);color:var(--text);font-family:inherit;outline:none;text-align:center;margin-bottom:14px;-webkit-appearance:none}
-.login-box input:focus{border-color:var(--blue2)}
-.login-btn{width:100%;min-height:52px;font-size:17px;font-weight:500;background:var(--blue2);color:#fff;border:none;border-radius:var(--radius-sm);cursor:pointer;font-family:inherit}
+.login-input{width:100%;font-size:18px;padding:14px 16px;border:2px solid var(--gray3);border-radius:var(--radius-sm);color:var(--text);font-family:inherit;outline:none;text-align:center;margin-bottom:14px;-webkit-appearance:none}
+.login-input:focus{border-color:var(--blue2)}
+.login-btn{width:100%;min-height:52px;font-size:17px;font-weight:500;background:var(--blue2);color:#fff;border:none;border-radius:var(--radius-sm);cursor:pointer;font-family:inherit;margin-bottom:10px}
 .login-btn:active{background:#1d4ed8}
-.saved-names{margin-top:20px;display:flex;flex-direction:column;gap:8px}
-.saved-names p{font-size:12px;color:var(--gray4);margin-bottom:4px}
-.saved-name-btn{padding:10px 16px;border-radius:var(--radius-sm);border:1.5px solid var(--gray3);background:var(--gray1);font-size:15px;color:var(--gray6);cursor:pointer;font-family:inherit;text-align:left;display:flex;align-items:center;gap:8px}
+.admin-toggle{font-size:13px;color:var(--gray4);cursor:pointer;text-decoration:underline;background:none;border:none;font-family:inherit;margin-bottom:16px;display:block;margin:0 auto 16px}
+.admin-section{background:var(--red-lt);border:1.5px solid var(--red-bd);border-radius:var(--radius-sm);padding:14px;margin-bottom:14px}
+.admin-section p{font-size:13px;color:var(--red);margin-bottom:8px;font-weight:500}
+.saved-names{margin-top:16px;display:flex;flex-direction:column;gap:8px}
+.saved-names-lbl{font-size:12px;color:var(--gray4);margin-bottom:4px}
+.saved-name-btn{padding:12px 16px;border-radius:var(--radius-sm);border:1.5px solid var(--gray3);background:var(--gray1);font-size:15px;color:var(--gray6);cursor:pointer;font-family:inherit;text-align:left}
 .saved-name-btn:active{background:var(--blue-lt);border-color:var(--blue-bd)}
 
 /* topbar */
 .topbar{background:var(--blue);color:#fff;padding:0 1rem;height:56px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,0.2)}
-.topbar h1{font-size:15px;font-weight:500;letter-spacing:0.02em}
+.topbar h1{font-size:15px;font-weight:500}
 .topbar-right{display:flex;align-items:center;gap:8px}
 .user-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.15);padding:5px 12px;border-radius:20px;font-size:13px;font-weight:500;cursor:pointer;border:1.5px solid rgba(255,255,255,0.25)}
-.user-badge:active{background:rgba(255,255,255,0.25)}
+.admin-badge{background:rgba(220,38,38,0.3);border-color:rgba(220,38,38,0.5)}
 .tbtn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:40px;padding:0 14px;border-radius:var(--radius-sm);border:1.5px solid rgba(255,255,255,0.25);background:transparent;font-size:14px;cursor:pointer;color:#fff;font-family:inherit}
 .tbtn:active{background:rgba(255,255,255,0.15)}
 .tbtn-p{background:var(--blue2);border-color:var(--blue2)}
 .tbtn-p:active{background:#1d4ed8}
+.sync-ind{font-size:11px;color:rgba(255,255,255,0.5)}
 
-/* tab strip */
+/* tabs */
 .tab-strip{background:#fff;border-bottom:1px solid var(--gray3);display:flex;overflow-x:auto;flex-shrink:0;-webkit-overflow-scrolling:touch;scrollbar-width:none}
 .tab-strip::-webkit-scrollbar{display:none}
 .tab{padding:0 20px;height:50px;display:inline-flex;align-items:center;font-size:15px;cursor:pointer;border:none;background:none;color:var(--gray5);border-bottom:3px solid transparent;white-space:nowrap;font-family:inherit;flex-shrink:0}
@@ -61,8 +65,10 @@ body{font-family:'Hiragino Kaku Gothic ProN','Hiragino Sans',Meiryo,sans-serif;b
 .s-cut{background:linear-gradient(90deg,#065f46,#10b981)}
 .s-seq{background:linear-gradient(90deg,#0e7490,#06b6d4)}
 
-/* coil badge */
-.coil-badge{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:500;padding:8px 16px;border-radius:20px;background:var(--blue-lt);border:1.5px solid var(--blue-bd);color:var(--blue2);margin:12px 16px;cursor:pointer;min-height:44px}
+/* coil */
+.coil-badge{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:500;padding:8px 16px;border-radius:20px;background:var(--blue-lt);border:1.5px solid var(--blue-bd);color:var(--blue2);margin:12px 16px;min-height:44px}
+.coil-badge.editable{cursor:pointer}
+.coil-badge.editable:active{background:#dbeafe}
 
 /* positioning */
 .pos-lay{display:grid;gap:14px;padding:0 16px 16px}
@@ -79,10 +85,12 @@ body{font-family:'Hiragino Kaku Gothic ProN','Hiragino Sans',Meiryo,sans-serif;b
 .add-r button{height:var(--touch);padding:0 18px;border-radius:var(--radius-sm);border:1.5px solid var(--gray3);background:#fff;font-size:22px;color:var(--gray5);cursor:pointer;flex-shrink:0}
 
 /* images */
-.img-zone{border:2px dashed var(--gray3);border-radius:var(--radius-sm);background:var(--gray1);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;cursor:pointer;position:relative;overflow:hidden}
+.img-zone{border:2px dashed var(--gray3);border-radius:var(--radius-sm);background:var(--gray1);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;position:relative;overflow:hidden}
+.img-zone.editable{cursor:pointer}
+.img-zone.editable:active{border-color:var(--blue2);background:var(--blue-lt)}
 .img-zone img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
 .img-ov{position:absolute;inset:0;background:rgba(0,0,0,0.5);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;opacity:0}
-.img-zone:active .img-ov{opacity:1}
+.img-zone.editable:active .img-ov{opacity:1}
 .img-ov span{color:#fff;font-size:12px}
 .cut-g{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:0 16px 16px}
 .img-sl{display:flex;flex-direction:column;gap:5px}
@@ -90,27 +98,30 @@ body{font-family:'Hiragino Kaku Gothic ProN','Hiragino Sans',Meiryo,sans-serif;b
 .img-sl-lbl span{font-size:12px;color:var(--gray5);font-weight:500}
 .img-del-btn{font-size:12px;padding:3px 8px;border-radius:5px;border:1px solid var(--gray3);background:#fff;color:var(--gray5);cursor:pointer;font-family:inherit}
 
-/* sequence table */
+/* seq table */
 .seq-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
 .seq-table{width:100%;min-width:660px;border-collapse:collapse}
-.seq-table th{background:var(--gray1);font-size:12px;font-weight:600;color:var(--gray5);padding:9px 10px;text-align:left;border-bottom:1px solid var(--gray3);letter-spacing:0.04em;white-space:nowrap}
+.seq-table th{background:var(--gray1);font-size:12px;font-weight:600;color:var(--gray5);padding:9px 10px;text-align:left;border-bottom:1px solid var(--gray3);white-space:nowrap}
 .seq-table td{padding:6px 8px;border-bottom:1px solid var(--gray2);vertical-align:middle}
 .seq-table tr:last-child td{border-bottom:none}
 .type-cell{padding:0!important;width:36px}
-.type-bar-wrap{width:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;min-height:56px;border-right:1px solid var(--gray2)}
+.type-bar-wrap{width:36px;display:flex;align-items:center;justify-content:center;min-height:56px;border-right:1px solid var(--gray2)}
+.type-bar-wrap.editable{cursor:pointer}
 .type-bar{width:6px;height:36px;border-radius:4px}
 .bar-r{background:var(--blue2)}.bar-o{background:var(--amber)}
 .seq-img-th{width:44px;height:44px;border-radius:8px;object-fit:cover;cursor:pointer;border:1px solid var(--gray3);display:block}
-.seq-img-em{width:44px;height:44px;border-radius:8px;border:2px dashed var(--gray3);display:flex;align-items:center;justify-content:center;cursor:pointer;background:var(--gray1);color:var(--gray4);font-size:20px}
+.seq-img-em{width:44px;height:44px;border-radius:8px;border:2px dashed var(--gray3);display:flex;align-items:center;justify-content:center;background:var(--gray1);color:var(--gray4);font-size:20px}
+.seq-img-em.editable{cursor:pointer}
+.seq-img-em.editable:active{border-color:var(--blue2);color:var(--blue2)}
 .s-sel{font-size:13px;padding:7px 8px;border:1.5px solid var(--gray3);border-radius:var(--radius-sm);background:#fff;color:var(--text);width:100%;font-family:inherit;outline:none;min-height:40px;-webkit-appearance:none}
 .s-inp{font-size:13px;padding:7px 9px;border:1.5px solid var(--gray3);border-radius:var(--radius-sm);background:#fff;color:var(--text);width:100%;font-family:inherit;outline:none;min-height:40px;margin-bottom:5px;-webkit-appearance:none}
+.readonly-text{font-size:13px;color:var(--gray6);padding:7px 0}
 
-/* memo — personal per user */
+/* memo */
 .memo-btn{display:inline-flex;align-items:center;gap:5px;font-size:12px;padding:5px 10px;border-radius:6px;border:1.5px solid var(--gray3);background:#fff;cursor:pointer;color:var(--gray5);font-family:inherit;min-height:32px}
 .memo-btn.has-memo{border-color:var(--amber);color:var(--amber);background:var(--amber-lt)}
 .memo-dot{width:7px;height:7px;border-radius:50%;background:var(--amber);display:inline-block;margin-left:2px}
-.memo-tr{background:var(--amber-lt)}
-.memo-inner{display:flex;gap:8px;align-items:flex-start;padding:10px 12px 10px 46px;border-top:1.5px solid var(--amber-bd)}
+.memo-inner{display:flex;gap:8px;align-items:flex-start;padding:10px 12px 10px 46px;background:var(--amber-lt);border-top:1.5px solid var(--amber-bd)}
 .memo-ta{flex:1;font-size:14px;padding:9px 11px;border:1.5px solid var(--amber-bd);border-radius:var(--radius-sm);background:#fff;color:var(--text);resize:none;height:80px;font-family:inherit;line-height:1.5;outline:none;-webkit-appearance:none}
 .memo-ta:focus{border-color:var(--amber)}
 .memo-close{font-size:13px;padding:8px 12px;border-radius:var(--radius-sm);border:1.5px solid var(--amber-bd);background:#fff;color:var(--amber);cursor:pointer;font-family:inherit;white-space:nowrap;min-height:40px}
@@ -136,20 +147,39 @@ body{font-family:'Hiragino Kaku Gothic ProN','Hiragino Sans',Meiryo,sans-serif;b
 /* toast */
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(12px);background:#1e293b;color:#fff;padding:11px 22px;border-radius:10px;font-size:14px;opacity:0;transition:all 0.25s;pointer-events:none;z-index:400;white-space:nowrap}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-.row-del{width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;background:none;border:none;color:var(--gray4);font-size:17px;border-radius:6px;flex-shrink:0}
-.saving-indicator{font-size:11px;color:rgba(255,255,255,0.5);margin-left:4px}
+.row-del{width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;background:none;border:none;color:var(--gray4);font-size:17px;border-radius:6px}
+.row-del:active{background:#fee2e2;color:#ef4444}
+
+/* loading */
+.loading-screen{position:fixed;inset:0;background:var(--blue);display:flex;align-items:center;justify-content:center;z-index:600;flex-direction:column;gap:16px}
+.loading-screen p{color:rgba(255,255,255,0.8);font-size:15px}
+.spinner{width:40px;height:40px;border:3px solid rgba(255,255,255,0.2);border-top-color:#fff;border-radius:50%;animation:spin 0.8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
 
-<!-- Login screen -->
-<div class="login-screen" id="login-screen">
+<!-- Loading -->
+<div class="loading-screen" id="loading-screen">
+  <div style="font-size:48px">🏥</div>
+  <div class="spinner"></div>
+  <p>読み込み中...</p>
+</div>
+
+<!-- Login -->
+<div class="login-screen" id="login-screen" style="display:none">
   <div class="login-box">
     <div style="font-size:48px;margin-bottom:12px">🏥</div>
     <h2>MRI 撮像マニュアル</h2>
-    <p>名前を入力してください</p>
-    <input id="login-name" type="text" placeholder="例：山田　太郎" maxlength="20" onkeydown="if(event.key==='Enter')doLogin()">
+    <p id="login-desc">名前を入力してください</p>
+    <input class="login-input" id="login-name" type="text" placeholder="例：山田　太郎" maxlength="20" onkeydown="if(event.key==='Enter')doLogin()">
+    <div id="admin-section" style="display:none" class="admin-section">
+      <p>🔐 管理者パスワード</p>
+      <input class="login-input" id="admin-pw" type="password" placeholder="パスワードを入力" style="margin-bottom:0">
+    </div>
+    <br>
     <button class="login-btn" onclick="doLogin()">スタート →</button>
+    <button class="admin-toggle" onclick="toggleAdminSection()">管理者としてログイン</button>
     <div class="saved-names" id="saved-names"></div>
   </div>
 </div>
@@ -159,9 +189,9 @@ body{font-family:'Hiragino Kaku Gothic ProN','Hiragino Sans',Meiryo,sans-serif;b
   <div class="topbar">
     <h1>🏥 MRI 撮像マニュアル</h1>
     <div class="topbar-right">
-      <span class="saving-indicator" id="saving-ind"></span>
-      <div class="user-badge" onclick="showLogout()">👤 <span id="user-name-disp"></span></div>
-      <button class="tbtn tbtn-p" onclick="openAddPart()">＋ 部位追加</button>
+      <span class="sync-ind" id="sync-ind"></span>
+      <div class="user-badge" id="user-badge" onclick="showLogout()">👤 <span id="user-name-disp"></span></div>
+      <button class="tbtn tbtn-p" id="add-part-btn" style="display:none" onclick="openAddPart()">＋ 部位追加</button>
     </div>
   </div>
   <div class="tab-strip" id="tabs"></div>
@@ -207,17 +237,30 @@ body{font-family:'Hiragino Kaku Gothic ProN','Hiragino Sans',Meiryo,sans-serif;b
 <input type="file" id="fi" accept="image/*" style="display:none">
 <div class="toast" id="toast"></div>
 
-<script>
+<!-- Firebase -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, doc, getDoc, setDoc, onSnapshot, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDTTV1WXFJqa0raf4E0D78flkogdcwBR9A",
+  authDomain: "mri-manual.firebaseapp.com",
+  projectId: "mri-manual",
+  storageBucket: "mri-manual.firebasestorage.app",
+  messagingSenderId: "11259561138",
+  appId: "1:11259561138:web:47a79d0e1dc01548b7b5ab"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const ADMIN_PASSWORD = "mri2024admin";
 const FOVS=['140','200','240','300','360'];
 const THICKS=['1','2','3','4','5','3D'];
 const PHASES=['AP','RL','HF'];
 const SEQS=['T2','T1','STIR','PD','DESS','Myelo','ABER','T2*','その他'];
 
-// Master manual data (shared, stored in localStorage as admin)
-const MASTER_KEY='mri_master_v1';
-let masterData;
-try{ const s=localStorage.getItem(MASTER_KEY); masterData=s?JSON.parse(s):null; }catch(e){ masterData=null; }
-if(!masterData) masterData={parts:[
+const DEFAULT_MASTER = {parts:[
   {id:'ls',name:'L-spine',coil:'SPINEコイル（S1〜S6）',
    images:{pos:null,sag:null,tra:null,c1:null,c2:null,c3:null},
    positioning:['仰向けとし、身体の正中と寝台中心を合わせる','両肩・骨盤が水平になるよう調整し、腰椎のねじれを防ぐ','膝下にクッションを入れ、腰椎前弯を軽減する','撮像中心はL3付近とし、コイル中心を一致させる','腕は体側または腹部上に置く'],
@@ -241,84 +284,146 @@ if(!masterData) masterData={parts:[
    ]}
 ]};
 
-// Per-user data: { checks: {partId: {idx: bool}}, memos: {partId: {seqIdx: str}} }
-const USER_KEY_PREFIX='mri_user_';
-let currentUser=null;
-let userData={checks:{},memos:{}};
-let cp=0, openMemos={}, pSlot=null, pSeq=null;
-let saveTimer=null;
+let masterData = JSON.parse(JSON.stringify(DEFAULT_MASTER));
+let currentUser = null;
+let isAdmin = false;
+let userData = {checks:{}, memos:{}};
+let cp = 0, openMemos = {}, pSlot = null, pSeq = null;
 
-// --- Login ---
-function initLogin(){
-  const saved=getSavedNames();
-  const el=document.getElementById('saved-names');
-  if(saved.length){
-    el.innerHTML='<p>最近使用した名前</p>'+saved.map(n=>`<button class="saved-name-btn" onclick="quickLogin('${n}')">👤 ${n}</button>`).join('');
-  }
-}
-function getSavedNames(){
-  try{ return JSON.parse(localStorage.getItem('mri_saved_names')||'[]'); }catch(e){ return []; }
-}
-function addSavedName(name){
-  let names=getSavedNames();
-  names=names.filter(n=>n!==name);
-  names.unshift(name);
-  names=names.slice(0,5);
-  localStorage.setItem('mri_saved_names',JSON.stringify(names));
-}
-function quickLogin(name){ document.getElementById('login-name').value=name; doLogin(); }
-function doLogin(){
-  const name=document.getElementById('login-name').value.trim();
-  if(!name){ document.getElementById('login-name').focus(); return; }
-  currentUser=name;
-  addSavedName(name);
-  loadUserData();
-  document.getElementById('login-screen').style.display='none';
-  const app=document.getElementById('main-app');
-  app.style.display='flex';
-  document.getElementById('user-name-disp').textContent=name;
-  render();
-}
-function showLogout(){ document.getElementById('mo-logout').style.display='flex'; }
-function doLogout(){
-  cm('mo-logout');
-  currentUser=null;
-  userData={checks:{},memos:{}};
-  cp=0; openMemos={};
-  document.getElementById('main-app').style.display='none';
-  document.getElementById('login-name').value='';
-  document.getElementById('login-screen').style.display='flex';
-  initLogin();
-}
-
-// --- User data (local per browser, keyed by username) ---
-function loadUserData(){
+// --- Firestore helpers ---
+async function loadMaster(){
   try{
-    const s=localStorage.getItem(USER_KEY_PREFIX+currentUser);
-    userData=s?JSON.parse(s):{checks:{},memos:{}};
+    const snap = await getDoc(doc(db,'manual','master'));
+    if(snap.exists()) masterData = snap.data();
+    else await setDoc(doc(db,'manual','master'), masterData);
+  }catch(e){ console.log('load error',e); }
+}
+
+async function saveMasterToFirestore(){
+  try{
+    document.getElementById('sync-ind').textContent='保存中...';
+    await setDoc(doc(db,'manual','master'), masterData);
+    document.getElementById('sync-ind').textContent='✓ 保存済み';
+    setTimeout(()=>document.getElementById('sync-ind').textContent='',2000);
+  }catch(e){ toast('保存に失敗しました'); }
+}
+
+async function loadUserData(username){
+  try{
+    const snap = await getDoc(doc(db,'users',username));
+    if(snap.exists()) userData = snap.data();
+    else userData = {checks:{}, memos:{}};
     if(!userData.checks) userData.checks={};
     if(!userData.memos) userData.memos={};
   }catch(e){ userData={checks:{},memos:{}}; }
 }
-function saveUserData(){
+
+async function saveUserDataToFirestore(){
   if(!currentUser) return;
-  clearTimeout(saveTimer);
-  saveTimer=setTimeout(()=>{
-    localStorage.setItem(USER_KEY_PREFIX+currentUser, JSON.stringify(userData));
-    const ind=document.getElementById('saving-ind');
-    ind.textContent='保存済み ✓';
-    setTimeout(()=>ind.textContent='',2000);
-  },600);
+  try{
+    await setDoc(doc(db,'users',currentUser), userData);
+  }catch(e){}
 }
-function saveMaster(){
-  localStorage.setItem(MASTER_KEY, JSON.stringify(masterData));
+
+// listen for master changes (realtime sync)
+function listenMaster(){
+  onSnapshot(doc(db,'manual','master'), snap=>{
+    if(snap.exists()){
+      masterData = snap.data();
+      if(currentUser) render();
+    }
+  });
 }
+
+// --- Login ---
+function getSavedNames(){
+  try{ return JSON.parse(localStorage.getItem('mri_names')||'[]'); }catch(e){ return []; }
+}
+function addSavedName(name){
+  let names=getSavedNames().filter(n=>n!==name);
+  names.unshift(name);
+  localStorage.setItem('mri_names',JSON.stringify(names.slice(0,5)));
+}
+
+window.toggleAdminSection = function(){
+  const el=document.getElementById('admin-section');
+  const btn=document.querySelector('.admin-toggle');
+  const desc=document.getElementById('login-desc');
+  if(el.style.display==='none'){
+    el.style.display='block';
+    btn.textContent='スタッフとしてログイン';
+    desc.textContent='管理者名とパスワードを入力';
+  } else {
+    el.style.display='none';
+    btn.textContent='管理者としてログイン';
+    desc.textContent='名前を入力してください';
+  }
+};
+
+window.doLogin = async function(){
+  const name=document.getElementById('login-name').value.trim();
+  if(!name){ document.getElementById('login-name').focus(); return; }
+  const adminVisible=document.getElementById('admin-section').style.display!=='none';
+  if(adminVisible){
+    const pw=document.getElementById('admin-pw').value;
+    if(pw!==ADMIN_PASSWORD){ toast('パスワードが違います'); return; }
+    isAdmin=true;
+  } else {
+    isAdmin=false;
+  }
+  currentUser=name;
+  addSavedName(name);
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('loading-screen').style.display='flex';
+  await loadUserData(name);
+  document.getElementById('loading-screen').style.display='none';
+  const appEl=document.getElementById('main-app');
+  appEl.style.display='flex';
+  document.getElementById('user-name-disp').textContent=name;
+  const badge=document.getElementById('user-badge');
+  const addBtn=document.getElementById('add-part-btn');
+  if(isAdmin){
+    badge.classList.add('admin-badge');
+    badge.innerHTML='🔐 管理者：'+name;
+    addBtn.style.display='flex';
+  } else {
+    badge.classList.remove('admin-badge');
+    badge.innerHTML='👤 '+name;
+    addBtn.style.display='none';
+  }
+  render();
+};
+
+window.showLogout = function(){ document.getElementById('mo-logout').style.display='flex'; };
+window.doLogout = function(){
+  cm('mo-logout');
+  currentUser=null; isAdmin=false;
+  userData={checks:{},memos:{}}; cp=0; openMemos={};
+  document.getElementById('main-app').style.display='none';
+  document.getElementById('login-name').value='';
+  document.getElementById('admin-pw').value='';
+  document.getElementById('admin-section').style.display='none';
+  document.querySelector('.admin-toggle').textContent='管理者としてログイン';
+  document.getElementById('login-desc').textContent='名前を入力してください';
+  document.getElementById('login-screen').style.display='flex';
+  initLoginScreen();
+};
+
+function initLoginScreen(){
+  const saved=getSavedNames();
+  const el=document.getElementById('saved-names');
+  if(saved.length){
+    el.innerHTML='<p class="saved-names-lbl">最近使用した名前</p>'+
+      saved.map(n=>`<button class="saved-name-btn" onclick="quickLogin('${n}')">👤 ${n}</button>`).join('');
+  }
+}
+window.quickLogin = function(name){ document.getElementById('login-name').value=name; doLogin(); };
 
 // --- Render ---
 function render(){
   document.getElementById('tabs').innerHTML=
     masterData.parts.map((p,i)=>`<button class="tab${i===cp?' active':''}" onclick="sp(${i})">${p.name}</button>`).join('')+
-    `<button class="tab-add" onclick="openAddPart()">＋</button>`;
+    (isAdmin?`<button class="tab-add" onclick="openAddPart()">＋</button>`:'');
 
   const p=masterData.parts[cp];
   const pid=p.id;
@@ -328,19 +433,21 @@ function render(){
   document.getElementById('content').innerHTML=`
     <div class="card">
       <div class="sec-hdr s-pos"><span class="sec-lbl">📋 ポジショニング</span></div>
-      <div class="coil-badge" onclick="openCoilEdit()">📡 ${p.coil} ✏️</div>
+      <div class="coil-badge${isAdmin?' editable':''}" onclick="${isAdmin?'openCoilEdit()':''}">
+        📡 ${p.coil}${isAdmin?' ✏️':''}
+      </div>
       <div class="pos-lay">
         <div>
           <div class="checklist">${p.positioning.map((item,i)=>`
             <div class="ci">
               <input type="checkbox" ${userData.checks[pid][i]?'checked':''} onchange="tc(${i})">
               <span>□ ${item}</span>
-              <button class="db" onclick="dc(${i})">✕</button>
+              ${isAdmin?`<button class="db" onclick="dc(${i})">✕</button>`:''}
             </div>`).join('')}</div>
-          <div class="add-r">
+          ${isAdmin?`<div class="add-r">
             <input id="nc" placeholder="チェック項目を追加...">
             <button onclick="ac()">＋</button>
-          </div>
+          </div>`:''}
         </div>
         <div style="display:flex;flex-direction:column;gap:10px">
           ${is('pos','ポジショニング写真',150)}
@@ -359,22 +466,20 @@ function render(){
     <div class="card">
       <div class="sec-hdr s-seq">
         <span class="sec-lbl">📊 ROUTINE シーケンス</span>
-        <span style="margin-left:auto;font-size:11px;color:rgba(255,255,255,0.75)">メモは個人保存</span>
+        <span style="margin-left:auto;font-size:11px;color:rgba(255,255,255,0.8)">📝メモは個人保存</span>
       </div>
       <div class="seq-scroll">
         <table class="seq-table">
-          <thead>
-            <tr>
-              <th style="width:36px"></th>
-              <th style="width:56px">画像</th>
-              <th style="width:100px">シーケンス</th>
-              <th>断面 / メモ</th>
-              <th style="width:76px">FOV</th>
-              <th style="width:86px">Thickness</th>
-              <th style="width:76px">位相方向</th>
-              <th style="width:36px"></th>
-            </tr>
-          </thead>
+          <thead><tr>
+            <th style="width:36px"></th>
+            <th style="width:56px">画像</th>
+            <th style="width:100px">シーケンス</th>
+            <th>断面 / メモ</th>
+            <th style="width:76px">FOV</th>
+            <th style="width:86px">Thickness</th>
+            <th style="width:76px">位相方向</th>
+            ${isAdmin?'<th style="width:36px"></th>':''}
+          </tr></thead>
           <tbody>
             ${p.routine.map((r,i)=>{
               const memoOpen=openMemos[cp+'-'+i];
@@ -382,32 +487,48 @@ function render(){
               const hasMemo=myMemo.trim();
               return `<tr>
                 <td class="type-cell">
-                  <div class="type-bar-wrap" onclick="tt(${i})">
+                  <div class="type-bar-wrap${isAdmin?' editable':''}" onclick="${isAdmin?`tt(${i})`:''}" title="${isAdmin?'タップで切替':''}">
                     <div class="type-bar ${r.type==='routine'?'bar-r':'bar-o'}"></div>
                   </div>
                 </td>
                 <td style="padding:6px">
                   ${r.img
-                    ?`<img class="seq-img-th" src="${r.img}" onclick="showL('${r.img}')" alt="seq"><div style="font-size:10px;color:#94a3b8;cursor:pointer;text-align:center;margin-top:2px" onclick="rsi(${i})">削除</div>`
-                    :`<div class="seq-img-em" onclick="tsu(${i})">＋</div>`
+                    ?`<img class="seq-img-th" src="${r.img}" onclick="showL('${r.img}')" alt="seq">
+                      ${isAdmin?`<div style="font-size:10px;color:#94a3b8;cursor:pointer;text-align:center;margin-top:2px" onclick="rsi(${i})">削除</div>`:''}`
+                    :`<div class="seq-img-em${isAdmin?' editable':''}" onclick="${isAdmin?`tsu(${i})`:''}">${isAdmin?'＋':'　'}</div>`
                   }
                 </td>
-                <td><select class="s-sel" onchange="us(${i},'seq',this.value)">${SEQS.map(s=>`<option${r.seq===s?' selected':''}>${s}</option>`).join('')}</select></td>
+                <td>${isAdmin
+                  ?`<select class="s-sel" onchange="us(${i},'seq',this.value)">${SEQS.map(s=>`<option${r.seq===s?' selected':''}>${s}</option>`).join('')}</select>`
+                  :`<span class="readonly-text"><b>${r.seq}</b></span>`
+                }</td>
                 <td>
-                  <input class="s-inp" value="${r.plane}${r.note?' / '+r.note:''}" placeholder="sag / FS..." onchange="usp(${i},this.value)">
+                  ${isAdmin
+                    ?`<input class="s-inp" value="${r.plane}${r.note?' / '+r.note:''}" placeholder="sag / FS..." onchange="usp(${i},this.value)">`
+                    :`<div class="readonly-text">${r.plane}${r.note?' / '+r.note:''}</div>`
+                  }
                   <button class="memo-btn${hasMemo?' has-memo':''}" onclick="toggleMemo(${i})">
                     📝 個人メモ${hasMemo?'<span class="memo-dot"></span>':''}
                   </button>
                 </td>
-                <td><select class="s-sel" onchange="us(${i},'fov',this.value)">${FOVS.map(f=>`<option${r.fov===f?' selected':''}>${f}</option>`).join('')}</select></td>
-                <td><select class="s-sel" onchange="us(${i},'thick',this.value)">${THICKS.map(t=>`<option${r.thick===t?' selected':''}>${t}</option>`).join('')}</select></td>
-                <td><select class="s-sel" onchange="us(${i},'phase',this.value)">${PHASES.map(ph=>`<option${r.phase===ph?' selected':''}>${ph}</option>`).join('')}</select></td>
-                <td><button class="row-del" onclick="ds(${i})">✕</button></td>
+                <td>${isAdmin
+                  ?`<select class="s-sel" onchange="us(${i},'fov',this.value)">${FOVS.map(f=>`<option${r.fov===f?' selected':''}>${f}</option>`).join('')}</select>`
+                  :`<span class="readonly-text">${r.fov}</span>`
+                }</td>
+                <td>${isAdmin
+                  ?`<select class="s-sel" onchange="us(${i},'thick',this.value)">${THICKS.map(t=>`<option${r.thick===t?' selected':''}>${t}</option>`).join('')}</select>`
+                  :`<span class="readonly-text">${r.thick}mm</span>`
+                }</td>
+                <td>${isAdmin
+                  ?`<select class="s-sel" onchange="us(${i},'phase',this.value)">${PHASES.map(ph=>`<option${r.phase===ph?' selected':''}>${ph}</option>`).join('')}</select>`
+                  :`<span class="readonly-text">${r.phase}</span>`
+                }</td>
+                ${isAdmin?`<td><button class="row-del" onclick="ds(${i})">✕</button></td>`:''}
               </tr>
-              <tr id="memo-tr-${i}" class="memo-tr" style="display:${memoOpen?'':'none'}">
-                <td colspan="8" style="padding:0">
+              <tr id="memo-tr-${i}" style="display:${memoOpen?'':'none'}">
+                <td colspan="${isAdmin?8:7}" style="padding:0">
                   <div class="memo-inner">
-                    <textarea class="memo-ta" placeholder="自分だけのメモ・注意点を入力（他のスタッフには見えません）..." onchange="saveMemo(${i},this.value)">${myMemo}</textarea>
+                    <textarea class="memo-ta" placeholder="自分だけのメモ（他のスタッフには見えません）..." onchange="saveMemo(${i},this.value)">${myMemo}</textarea>
                     <button class="memo-close" onclick="toggleMemo(${i})">✕ 閉じる</button>
                   </div>
                 </td>
@@ -415,7 +536,7 @@ function render(){
             }).join('')}
           </tbody>
         </table>
-        <div class="add-seq-bar">
+        ${isAdmin?`<div class="add-seq-bar">
           <select id="as-seq">${SEQS.map(s=>`<option>${s}</option>`).join('')}</select>
           <input id="as-pl" placeholder="断面 / メモ（例: sag / FS）">
           <select id="as-fov">${FOVS.map(f=>`<option${f==='240'?' selected':''}>${f}</option>`).join('')}</select>
@@ -423,59 +544,64 @@ function render(){
           <select id="as-ph">${PHASES.map(ph=>`<option>${ph}</option>`).join('')}</select>
           <select id="as-ty"><option value="routine">ルーチン</option><option value="option">オプション</option></select>
           <button class="tbtn tbtn-p" style="min-height:44px;border-radius:8px;padding:0 16px" onclick="addSeq()">＋ 追加</button>
-        </div>
+        </div>`:''}
       </div>
     </div>
     <div style="display:flex;justify-content:flex-end;padding:4px 0 8px">
-      <button style="min-height:44px;padding:0 18px;border-radius:var(--radius-sm);border:1.5px solid var(--gray3);background:#fff;font-size:14px;color:var(--gray5);cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:6px" onclick="rc()">↺ チェックリセット</button>
+      <button style="min-height:44px;padding:0 18px;border-radius:var(--radius-sm);border:1.5px solid var(--gray3);background:#fff;font-size:14px;color:var(--gray5);cursor:pointer;font-family:inherit" onclick="rc()">↺ チェックリセット</button>
     </div>
   `;
-  const nc=document.getElementById('nc');
-  if(nc) nc.addEventListener('keydown',e=>{ if(e.key==='Enter') ac(); });
+  if(isAdmin){
+    const nc=document.getElementById('nc');
+    if(nc) nc.addEventListener('keydown',e=>{ if(e.key==='Enter') ac(); });
+  }
 }
 
 function is(key,label,h){
   const p=masterData.parts[cp]; const src=p.images[key];
   if(src) return `<div class="img-sl">
-    <div class="img-zone" style="height:${h}px" onclick="tu('${key}')">
+    <div class="img-zone${isAdmin?' editable':''}" style="height:${h}px" onclick="${isAdmin?`tu('${key}')`:''} ">
       <img src="${src}" alt="${label}">
-      <div class="img-ov"><span style="font-size:24px">📷</span><span>タップして変更</span></div>
+      ${isAdmin?`<div class="img-ov"><span style="font-size:24px">📷</span><span>タップして変更</span></div>`:''}
     </div>
-    <div class="img-sl-lbl"><span>${label}</span><button class="img-del-btn" onclick="ri('${key}')">削除</button></div>
+    <div class="img-sl-lbl">
+      <span>${label}</span>
+      ${isAdmin?`<button class="img-del-btn" onclick="ri('${key}')">削除</button>`:''}
+    </div>
   </div>`;
   return `<div class="img-sl">
-    <div class="img-zone" style="height:${h}px" onclick="tu('${key}')">
-      <span style="font-size:28px;color:#94a3b8">＋</span>
-      <span style="font-size:12px;color:#64748b;text-align:center;padding:0 8px">${label}</span>
+    <div class="img-zone${isAdmin?' editable':''}" style="height:${h}px" onclick="${isAdmin?`tu('${key}')`:''} ">
+      ${isAdmin?`<span style="font-size:28px;color:#94a3b8">＋</span><span style="font-size:12px;color:#64748b;text-align:center;padding:0 8px">${label}</span>`
+               :`<span style="font-size:12px;color:#94a3b8;text-align:center;padding:0 8px">${label}</span>`}
     </div>
   </div>`;
 }
 
 // image upload
-function tu(slot){pSlot=slot;pSeq=null;document.getElementById('fi').click()}
-function tsu(i){pSeq=i;pSlot=null;document.getElementById('fi').click()}
+window.tu = function(slot){pSlot=slot;pSeq=null;document.getElementById('fi').click()};
+window.tsu = function(i){pSeq=i;pSlot=null;document.getElementById('fi').click()};
 document.getElementById('fi').addEventListener('change',function(){
   const file=this.files[0];if(!file)return;
   const r=new FileReader();
-  r.onload=e=>{
+  r.onload=async e=>{
     if(pSeq!==null) masterData.parts[cp].routine[pSeq].img=e.target.result;
     else if(pSlot) masterData.parts[cp].images[pSlot]=e.target.result;
-    saveMaster(); render();
+    await saveMasterToFirestore(); render();
   };
   r.readAsDataURL(file); this.value='';
 });
-function ri(k){masterData.parts[cp].images[k]=null;saveMaster();render()}
-function rsi(i){masterData.parts[cp].routine[i].img=null;saveMaster();render()}
-function showL(src){document.getElementById('lbox-img').src=src;document.getElementById('lbox').style.display='flex'}
+window.ri = async function(k){masterData.parts[cp].images[k]=null;await saveMasterToFirestore();render()};
+window.rsi = async function(i){masterData.parts[cp].routine[i].img=null;await saveMasterToFirestore();render()};
+window.showL = function(src){document.getElementById('lbox-img').src=src;document.getElementById('lbox').style.display='flex'};
 
-// master edits
-function us(i,k,v){masterData.parts[cp].routine[i][k]=v;saveMaster()}
-function usp(i,v){const ps=v.split('/');masterData.parts[cp].routine[i].plane=(ps[0]||'').trim();masterData.parts[cp].routine[i].note=(ps[1]||'').trim();saveMaster()}
-function tt(i){const r=masterData.parts[cp].routine[i];r.type=r.type==='routine'?'option':'routine';saveMaster();render()}
-function dc(i){masterData.parts[cp].positioning.splice(i,1);saveMaster();render()}
-function ac(){const v=document.getElementById('nc').value.trim();if(!v)return;masterData.parts[cp].positioning.push(v);saveMaster();render()}
-function ds(i){masterData.parts[cp].routine.splice(i,1);saveMaster();render()}
-function addSeq(){
+// admin edits
+window.us = async function(i,k,v){masterData.parts[cp].routine[i][k]=v;await saveMasterToFirestore()};
+window.usp = async function(i,v){const ps=v.split('/');masterData.parts[cp].routine[i].plane=(ps[0]||'').trim();masterData.parts[cp].routine[i].note=(ps[1]||'').trim();await saveMasterToFirestore()};
+window.tt = async function(i){const r=masterData.parts[cp].routine[i];r.type=r.type==='routine'?'option':'routine';await saveMasterToFirestore();render()};
+window.dc = async function(i){masterData.parts[cp].positioning.splice(i,1);await saveMasterToFirestore();render()};
+window.ac = async function(){const v=document.getElementById('nc').value.trim();if(!v)return;masterData.parts[cp].positioning.push(v);await saveMasterToFirestore();render()};
+window.ds = async function(i){masterData.parts[cp].routine.splice(i,1);await saveMasterToFirestore();render()};
+window.addSeq = async function(){
   const pl=document.getElementById('as-pl').value.trim();
   const ps=pl.split('/');
   masterData.parts[cp].routine.push({
@@ -487,57 +613,65 @@ function addSeq(){
     type:document.getElementById('as-ty').value,
     img:null
   });
-  saveMaster(); render();
-}
+  await saveMasterToFirestore(); render();
+};
 
-// user-specific
-function tc(i){
+// user actions
+window.tc = async function(i){
   const pid=masterData.parts[cp].id;
   if(!userData.checks[pid]) userData.checks[pid]={};
   userData.checks[pid][i]=!userData.checks[pid][i];
-  saveUserData();
-}
-function rc(){
+  await saveUserDataToFirestore();
+};
+window.rc = async function(){
   const pid=masterData.parts[cp].id;
   userData.checks[pid]={};
-  saveUserData(); render();
+  await saveUserDataToFirestore(); render();
   toast('チェックをリセットしました');
-}
-function saveMemo(i,val){
+};
+window.saveMemo = async function(i,val){
   const pid=masterData.parts[cp].id;
   if(!userData.memos[pid]) userData.memos[pid]={};
   userData.memos[pid][i]=val;
-  saveUserData();
-  // update memo btn style live
-  const btn=document.querySelector(`#memo-tr-${i}`).previousElementSibling.querySelector('.memo-btn');
+  await saveUserDataToFirestore();
+  const btn=document.querySelector(`#memo-tr-${i}`)?.previousElementSibling?.querySelector('.memo-btn');
   if(btn){
     if(val.trim()){ btn.classList.add('has-memo'); if(!btn.querySelector('.memo-dot')) btn.innerHTML='📝 個人メモ<span class="memo-dot"></span>'; }
     else { btn.classList.remove('has-memo'); btn.innerHTML='📝 個人メモ'; }
   }
-}
-function toggleMemo(i){
+};
+window.toggleMemo = function(i){
   const key=cp+'-'+i; openMemos[key]=!openMemos[key];
   const el=document.getElementById('memo-tr-'+i);
   if(el) el.style.display=openMemos[key]?'':'none';
-}
+};
 
-function sp(i){cp=i;openMemos={};render();document.getElementById('scroll').scrollTop=0}
-function openAddPart(){document.getElementById('np-name').value='';document.getElementById('mo-part').style.display='flex';setTimeout(()=>document.getElementById('np-name').focus(),100)}
-function cm(id){document.getElementById(id).style.display='none'}
-function addPart(){
+window.sp = function(i){cp=i;openMemos={};render();document.getElementById('scroll').scrollTop=0};
+window.openAddPart = function(){document.getElementById('np-name').value='';document.getElementById('mo-part').style.display='flex';setTimeout(()=>document.getElementById('np-name').focus(),100)};
+window.cm = function(id){document.getElementById(id).style.display='none'};
+window.addPart = async function(){
   const name=document.getElementById('np-name').value.trim();if(!name)return;
   masterData.parts.push({id:'p'+Date.now(),name,coil:'（コイルを設定）',images:{pos:null,sag:null,tra:null,c1:null,c2:null,c3:null},positioning:[],routine:[]});
-  cp=masterData.parts.length-1;cm('mo-part');saveMaster();render();
-}
-function openCoilEdit(){document.getElementById('coil-val').value=masterData.parts[cp].coil;document.getElementById('mo-coil').style.display='flex';setTimeout(()=>document.getElementById('coil-val').focus(),100)}
-function saveCoil(){const v=document.getElementById('coil-val').value.trim();if(v)masterData.parts[cp].coil=v;cm('mo-coil');saveMaster();render()}
+  cp=masterData.parts.length-1;cm('mo-part');await saveMasterToFirestore();render();
+};
+window.openCoilEdit = function(){document.getElementById('coil-val').value=masterData.parts[cp].coil;document.getElementById('mo-coil').style.display='flex';setTimeout(()=>document.getElementById('coil-val').focus(),100)};
+window.saveCoil = async function(){const v=document.getElementById('coil-val').value.trim();if(v)masterData.parts[cp].coil=v;cm('mo-coil');await saveMasterToFirestore();render()};
 
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200)}
+
 document.addEventListener('keydown',e=>{
   if(e.key==='Escape'){cm('mo-part');cm('mo-coil');cm('mo-logout');document.getElementById('lbox').style.display='none'}
 });
 
-initLogin();
+// Init
+(async function(){
+  await loadMaster();
+  listenMaster();
+  document.getElementById('loading-screen').style.display='none';
+  document.getElementById('login-screen').style.display='flex';
+  initLoginScreen();
+})();
+
 </script>
 </body>
 </html>
