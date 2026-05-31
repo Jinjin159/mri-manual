@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>MRI 撮像マニュアル</title>
+<style>
+:root{
+  --blue:#1e3a6e;
+  --blue2:#2563eb;
+  --blue-lt:#eff6ff;
+  --blue-bd:#bfdbfe;
+  --seq:#0891b2;
+  --cut:#059669;
+  --amber:#d97706;
+  --amber-lt:#fffbeb;
+  --amber-bd:#fcd34d;
+  --gray1:#f8fafc;
+  --gray2:#f1f5f9;
+  --gray3:#e2e8f0;
+  --gray4:#94a3b8;
+  --gray5:#64748b;
+  --gray6:#374151;
+  --text:#1e293b;
+  --radius:12px;
+  --radius-sm:8px;
+  --touch:52px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Hiragino Kaku Gothic ProN','Hiragino Sans',Meiryo,sans-serif;background:var(--gray2);color:var(--text);display:flex;flex-direction:column}
+
+/* topbar */
+.topbar{background:var(--blue);color:#fff;padding:0 1rem;height:56px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,0.2)}
+.topbar h1{font-size:16px;font-weight:500;letter-spacing:0.02em}
+.topbar-btns{display:flex;gap:8px}
+.tbtn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:40px;padding:0 14px;border-radius:var(--radius-sm);border:1.5px solid rgba(255,255,255,0.25);background:transparent;font-size:14px;cursor:pointer;color:#fff;font-family:inherit;transition:background 0.15s;white-space:nowrap}
+.tbtn:active{background:rgba(255,255,255,0.15)}
+.tbtn-p{background:var(--blue2);border-color:var(--blue2)}
+.tbtn-p:active{background:#1d4ed8}
+
+/* tab strip */
+.tab-strip{background:#fff;border-bottom:1px solid var(--gray3);display:flex;overflow-x:auto;flex-shrink:0;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.tab-strip::-webkit-scrollbar{display:none}
+.tab{padding:0 20px;height:50px;display:inline-flex;align-items:center;font-size:15px;cursor:pointer;border:none;background:none;color:var(--gray5);border-bottom:3px solid transparent;white-space:nowrap;font-family:inherit;flex-shrink:0;transition:color 0.15s}
+.tab.active{color:var(--blue2);border-bottom-color:var(--blue2);font-weight:500}
+.tab-add{padding:0 16px;height:50px;display:inline-flex;align-items:center;font-size:22px;cursor:pointer;border:none;background:none;color:var(--gray4);font-family:inherit;flex-shrink:0}
+
+/* scroll area */
+.scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:1rem;display:flex;flex-direction:column;gap:12px;padding-bottom:2rem}
+
+/* cards */
+.card{background:#fff;border-radius:var(--radius);overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.07)}
+.sec-hdr{display:flex;align-items:center;padding:11px 16px;gap:8px}
+.sec-lbl{font-size:13px;font-weight:600;color:#fff;letter-spacing:0.06em;text-transform:uppercase}
+.s-pos{background:linear-gradient(90deg,#1e40af,#3b82f6)}
+.s-cut{background:linear-gradient(90deg,#065f46,#10b981)}
+.s-seq{background:linear-gradient(90deg,#0e7490,#06b6d4)}
+.card-body{padding:14px 16px}
+
+/* coil badge */
+.coil-badge{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:500;padding:8px 16px;border-radius:20px;background:var(--blue-lt);border:1.5px solid var(--blue-bd);color:var(--blue2);margin:12px 16px;cursor:pointer;min-height:var(--touch)}
+.coil-badge:active{background:#dbeafe}
+
+/* positioning layout */
+.pos-lay{display:grid;gap:14px;padding:0 16px 16px}
+@media(min-width:700px){.pos-lay{grid-template-columns:1fr 1fr}}
+
+/* checklist */
+.checklist{display:flex;flex-direction:column;gap:4px;margin-bottom:10px}
+.ci{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:var(--radius-sm);font-size:15px;color:var(--gray6);background:var(--gray1);min-height:var(--touch)}
+.ci input[type=checkbox]{width:22px;height:22px;cursor:pointer;accent-color:var(--blue2);flex-shrink:0;border-radius:5px}
+.ci span{flex:1;line-height:1.4}
+.ci .db{width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;background:none;border:none;color:var(--gray4);border-radius:6px;font-size:16px;flex-shrink:0}
+.ci .db:active{background:#fee2e2;color:#ef4444}
+.add-r{display:flex;gap:8px}
+.add-r input{flex:1;font-size:15px;padding:0 14px;height:var(--touch);border:1.5px solid var(--gray3);border-radius:var(--radius-sm);background:#fff;color:var(--text);font-family:inherit;outline:none;-webkit-appearance:none}
+.add-r input:focus{border-color:var(--blue2)}
+.add-r button{height:var(--touch);padding:0 18px;border-radius:var(--radius-sm);border:1.5px solid var(--gray3);background:#fff;font-size:22px;color:var(--gray5);cursor:pointer;flex-shrink:0}
+.add-r button:active{background:var(--gray2)}
+
+/* image zones */
+.img-zone{border:2px dashed var(--gray3);border-radius:var(--radius-sm);background:var(--gray1);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;cursor:pointer;position:relative;overflow:hidden;transition:border-color 0.15s}
+.img-zone:active{border-color:var(--blue2);background:var(--blue-lt)}
+.img-zone img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.img-ov{position:absolute;inset:0;background:rgba(0,0,0,0.5);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;opacity:0}
+.img-zone:active .img-ov{opacity:1}
+.img-ov span{color:#fff;font-size:12px}
+.cut-g{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:0 16px 16px}
+.img-sl{display:flex;flex-direction:column;gap:5px}
+.img-sl-lbl{display:flex;align-items:center;justify-content:space-between;padding:0 2px}
+.img-sl-lbl span{font-size:12px;color:var(--gray5);font-weight:500}
+.img-del-btn{font-size:12px;padding:3px 8px;border-radius:5px;border:1px solid var(--gray3);background:#fff;color:var(--gray5);cursor:pointer;font-family:inherit}
+
+/* sequence table — scroll horizontally on small screens */
+.seq-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.seq-table{width:100%;min-width:680px;border-collapse:collapse}
+.seq-table th{background:var(--gray1);font-size:12px;font-weight:600;color:var(--gray5);padding:9px 10px;text-align:left;border-bottom:1px solid var(--gray3);letter-spacing:0.04em;white-space:nowrap}
+.seq-table td{padding:6px 8px;border-bottom:1px solid var(--gray2);vertical-align:middle}
+.seq-table tr:last-child td{border-bottom:none}
+.seq-table tr:active td{background:var(--gray1)}
+
+/* type bar */
+.type-cell{padding:0!important;width:36px}
+.type-bar-wrap{width:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;min-height:56px;border-right:1px solid var(--gray2)}
+.type-bar{width:6px;height:36px;border-radius:4px;transition:background 0.2s}
+.bar-r{background:var(--blue2)}.bar-o{background:var(--amber)}
+
+/* seq image */
+.seq-img-th{width:44px;height:44px;border-radius:8px;object-fit:cover;cursor:pointer;border:1px solid var(--gray3);display:block}
+.seq-img-em{width:44px;height:44px;border-radius:8px;border:2px dashed var(--gray3);display:flex;align-items:center;justify-content:center;cursor:pointer;background:var(--gray1);color:var(--gray4);font-size:20px}
+.seq-img-em:active{border-color:var(--blue2);background:var(--blue-lt);color:var(--blue2)}
+
+/* seq controls */
+.s-sel{font-size:13px;padding:7px 8px;border:1.5px solid var(--gray3);border-radius:var(--radius-sm);background:#fff;color:var(--text);width:100%;font-family:inherit;outline:none;-webkit-appearance:none;min-height:40px}
+.s-sel:focus{border-color:var(--blue2)}
+.s-inp{font-size:13px;padding:7px 9px;border:1.5px solid var(--gray3);border-radius:var(--radius-sm);background:#fff;color:var(--text);width:100%;font-family:inherit;outline:none;min-height:40px;margin-bottom:5px;-webkit-appearance:none}
+.s-inp:focus{border-color:var(--blue2)}
+
+/* memo btn */
+.memo-btn{display:inline-flex;align-items:center;gap:5px;font-size:12px;padding:5px 10px;border-radius:6px;border:1.5px solid var(--gray3);background:#fff;cursor:pointer;color:var(--gray5);font-family:inherit;min-height:32px}
+.memo-btn:active{border-color:var(--amber);color:var(--amber);background:var(--amber-lt)}
+.memo-dot{width:7px;height:7px;border-radius:50%;background:var(--amber);display:inline-block;margin-left:2px}
+
+/* memo accordion */
+.memo-row{background:var(--amber-lt);border-top:1.5px solid var(--amber-bd);overflow:hidden;max-height:0;transition:max-height 0.22s ease}
+.memo-row.open{max-height:180px}
+.memo-inner{display:flex;gap:8px;align-items:flex-start;padding:10px 12px 10px 46px}
+.memo-ta{flex:1;font-size:14px;padding:9px 11px;border:1.5px solid var(--amber-bd);border-radius:var(--radius-sm);background:#fff;color:var(--text);resize:none;height:80px;font-family:inherit;line-height:1.5;outline:none;-webkit-appearance:none}
+.memo-ta:focus{border-color:var(--amber)}
+.memo-close{font-size:13px;padding:8px 12px;border-radius:var(--radius-sm);border:1.5px solid var(--amber-bd);background:#fff;color:var(--amber);cursor:pointer;font-family:inherit;white-space:nowrap;min-height:40px}
+
+/* add seq bar */
+.add-seq-bar{padding:12px 14px;border-top:1px solid var(--gray3);background:var(--gray1);display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.add-seq-bar select,.add-seq-bar input{font-size:13px;padding:8px 10px;border:1.5px solid var(--gray3);border-radius:var(--radius-sm);background:#fff;color:var(--text);font-family:inherit;outline:none;min-height:44px;-webkit-appearance:none}
+.add-seq-bar input{flex:1;min-width:120px}
+.add-seq-bar .tbtn-p{min-height:44px}
+
+/* del btn in table */
+.row-del{width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;background:none;border:none;color:var(--gray4);font-size:17px;border-radius:6px;flex-shrink:0}
+.row-del:active{background:#fee2e2;color:#ef4444}
+
+/* bottom bar */
+.bottom-bar{display:flex;justify-content:flex-end;padding:4px 0 8px}
+
+/* modal overlay */
+.mo-bg{position:fixed;inset:0;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:200;padding:20px}
+.mo{background:#fff;border-radius:16px;padding:24px;width:100%;max-width:380px;box-shadow:0 24px 64px rgba(0,0,0,0.25)}
+.mo h3{font-size:18px;font-weight:600;margin-bottom:16px;color:var(--blue)}
+.mo input{width:100%;font-size:16px;padding:12px 14px;border:1.5px solid var(--gray3);border-radius:var(--radius-sm);color:var(--text);margin-bottom:16px;font-family:inherit;outline:none;-webkit-appearance:none;min-height:var(--touch)}
+.mo input:focus{border-color:var(--blue2)}
+.mo-btns{display:flex;gap:10px;justify-content:flex-end}
+.mo-cancel{min-height:44px;padding:0 18px;border-radius:var(--radius-sm);border:1.5px solid var(--gray3);background:#fff;font-size:15px;color:var(--gray5);cursor:pointer;font-family:inherit}
+
+/* lightbox */
+.lbox{position:fixed;inset:0;background:rgba(0,0,0,0.88);display:flex;align-items:center;justify-content:center;z-index:300;cursor:pointer}
+.lbox img{max-width:96vw;max-height:90vh;border-radius:10px;object-fit:contain}
+
+/* toast */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(12px);background:#1e293b;color:#fff;padding:11px 22px;border-radius:10px;font-size:14px;opacity:0;transition:all 0.25s;pointer-events:none;z-index:400;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* reset btn */
+.reset-btn{min-height:44px;padding:0 18px;border-radius:var(--radius-sm);border:1.5px solid var(--gray3);background:#fff;font-size:14px;color:var(--gray5);cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:6px}
+.reset-btn:active{background:var(--gray2)}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <h1>🏥 MRI 撮像マニュアル</h1>
+  <div class="topbar-btns">
+    <button class="tbtn" onclick="exportData()">⬇ 出力</button>
+    <button class="tbtn tbtn-p" onclick="openAddPart()">＋ 部位追加</button>
+  </div>
+</div>
+
+<div class="tab-strip" id="tabs"></div>
+
+<div class="scroll" id="scroll">
+  <div id="content"></div>
+</div>
+
+<!-- modals -->
+<div class="mo-bg" id="mo-part" style="display:none">
+  <div class="mo">
+    <h3>部位を追加</h3>
+    <input id="np-name" placeholder="例: 膝関節 / Knee" onkeydown="if(event.key==='Enter')addPart()">
+    <div class="mo-btns">
+      <button class="mo-cancel" onclick="cm('mo-part')">キャンセル</button>
+      <button class="tbtn tbtn-p" style="min-height:44px;border-radius:8px" onclick="addPart()">追加</button>
+    </div>
+  </div>
+</div>
+<div class="mo-bg" id="mo-coil" style="display:none">
+  <div class="mo">
+    <h3>使用コイルを編集</h3>
+    <input id="coil-val" onkeydown="if(event.key==='Enter')saveCoil()">
+    <div class="mo-btns">
+      <button class="mo-cancel" onclick="cm('mo-coil')">キャンセル</button>
+      <button class="tbtn tbtn-p" style="min-height:44px;border-radius:8px" onclick="saveCoil()">保存</button>
+    </div>
+  </div>
+</div>
+<div class="lbox" id="lbox" style="display:none" onclick="this.style.display='none'">
+  <img id="lbox-img" src="" alt="拡大表示">
+</div>
+<input type="file" id="fi" accept="image/*" style="display:none">
+<div class="toast" id="toast"></div>
+
+<script>
+const FOVS=['140','200','240','300','360'];
+const THICKS=['1','2','3','4','5','3D'];
+const PHASES=['AP','RL','HF'];
+const SEQS=['T2','T1','STIR','PD','DESS','Myelo','ABER','T2*','その他'];
+const STORAGE_KEY='mri_manual_v2';
+
+let data;
+try{ const s=localStorage.getItem(STORAGE_KEY); data=s?JSON.parse(s):null; }catch(e){ data=null; }
+if(!data) data={parts:[
+  {id:'ls',name:'L-spine',coil:'SPINEコイル（S1〜S6）',
+   images:{pos:null,sag:null,tra:null,c1:null,c2:null,c3:null},
+   positioning:['仰向けとし、身体の正中と寝台中心を合わせる','両肩・骨盤が水平になるよう調整し、腰椎のねじれを防ぐ','膝下にクッションを入れ、腰椎前弯を軽減する','撮像中心はL3付近とし、コイル中心を一致させる','腕は体側または腹部上に置く'],
+   routine:[
+    {seq:'T2',plane:'sag',note:'',fov:'300',thick:'3',phase:'AP',type:'routine',img:null,memo:''},
+    {seq:'STIR',plane:'sag',note:'',fov:'300',thick:'3',phase:'AP',type:'routine',img:null,memo:''},
+    {seq:'T1',plane:'sag',note:'',fov:'300',thick:'3',phase:'AP',type:'routine',img:null,memo:''},
+    {seq:'T2',plane:'tra',note:'',fov:'240',thick:'4',phase:'RL',type:'routine',img:null,memo:''},
+    {seq:'STIR',plane:'tra',note:'FS',fov:'240',thick:'4',phase:'RL',type:'option',img:null,memo:'脂肪抑制に注意。磁場不均一の場合はSTIRを優先'},
+    {seq:'Myelo',plane:'cor',note:'',fov:'360',thick:'3D',phase:'HF',type:'option',img:null,memo:'息止め不要。3D収集のため時間がかかる'},
+   ]},
+  {id:'sh',name:'Shoulder',coil:'Flexコイル（肩関節専用）',
+   images:{pos:null,sag:null,tra:null,c1:null,c2:null,c3:null},
+   positioning:['仰向けまたは側臥位とし、撮像側の肩を寝台端に合わせる','上肢を体側に沿わせ、手掌を大腿外側に向ける（外旋位）','肩関節が動かないよう固定し、動きを最小化する','撮像中心は肩峰とし、コイル中心を一致させる','フレックスコイルを肩関節に密着させて固定する'],
+   routine:[
+    {seq:'T2',plane:'sag',note:'',fov:'200',thick:'3',phase:'AP',type:'routine',img:null,memo:''},
+    {seq:'T1',plane:'sag',note:'',fov:'200',thick:'3',phase:'AP',type:'routine',img:null,memo:''},
+    {seq:'STIR',plane:'cor',note:'',fov:'200',thick:'3',phase:'HF',type:'routine',img:null,memo:''},
+    {seq:'PD',plane:'tra',note:'FS',fov:'160',thick:'3',phase:'AP',type:'routine',img:null,memo:'FS付き。水分・軟骨評価に有効'},
+    {seq:'ABER',plane:'oblique',note:'外転外旋位',fov:'160',thick:'3',phase:'AP',type:'option',img:null,memo:'ABER肢位が取れない場合はスキップ可'},
+   ]}
+]};
+
+let cp=0, checks={}, pSlot=null, pSeq=null, openMemos={};
+
+function save(){ try{ localStorage.setItem(STORAGE_KEY,JSON.stringify(data)); }catch(e){} }
+function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2200); }
+
+function render(){
+  document.getElementById('tabs').innerHTML=
+    data.parts.map((p,i)=>`<button class="tab${i===cp?' active':''}" onclick="sp(${i})">${p.name}</button>`).join('')+
+    `<button class="tab-add" onclick="openAddPart()">＋</button>`;
+
+  const p=data.parts[cp];
+  if(!checks[p.id]) checks[p.id]={};
+
+  document.getElementById('content').innerHTML=`
+    <div class="card">
+      <div class="sec-hdr s-pos"><span class="sec-lbl">📋 ポジショニング</span></div>
+      <div class="coil-badge" onclick="openCoilEdit()">📡 ${p.coil} ✏️</div>
+      <div class="pos-lay">
+        <div>
+          <div class="checklist">${p.positioning.map((item,i)=>`
+            <div class="ci">
+              <input type="checkbox" ${checks[p.id][i]?'checked':''} onchange="tc(${i})">
+              <span>□ ${item}</span>
+              <button class="db" onclick="dc(${i})">✕</button>
+            </div>`).join('')}</div>
+          <div class="add-r">
+            <input id="nc" placeholder="チェック項目を追加...">
+            <button onclick="ac()">＋</button>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          ${is('pos','ポジショニング写真',150)}
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            ${is('sag','MRI矢状断',115)}${is('tra','MRI横断',115)}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="sec-hdr s-cut"><span class="sec-lbl">✂ HOW TO CUT</span></div>
+      <div class="cut-g">${is('c1','断面①',120)}${is('c2','断面②',120)}${is('c3','断面③',120)}</div>
+    </div>
+
+    <div class="card">
+      <div class="sec-hdr s-seq">
+        <span class="sec-lbl">📊 ROUTINE シーケンス</span>
+        <span style="margin-left:auto;font-size:11px;color:rgba(255,255,255,0.75)">バーをタップで種別切替</span>
+      </div>
+      <div class="seq-scroll">
+        <table class="seq-table">
+          <thead>
+            <tr>
+              <th style="width:36px"></th>
+              <th style="width:56px">画像</th>
+              <th style="width:100px">シーケンス</th>
+              <th>断面 / メモ</th>
+              <th style="width:78px">FOV</th>
+              <th style="width:88px">Thickness</th>
+              <th style="width:78px">位相方向</th>
+              <th style="width:36px"></th>
+            </tr>
+          </thead>
+          <tbody>
+            ${p.routine.map((r,i)=>{
+              const memoOpen=openMemos[cp+'-'+i];
+              const hasMemo=r.memo&&r.memo.trim();
+              return `<tr>
+                <td class="type-cell">
+                  <div class="type-bar-wrap" onclick="tt(${i})" title="タップで切替">
+                    <div class="type-bar ${r.type==='routine'?'bar-r':'bar-o'}"></div>
+                  </div>
+                </td>
+                <td style="padding:6px">
+                  ${r.img
+                    ?`<img class="seq-img-th" src="${r.img}" onclick="showL('${r.img}')" alt="seq"><div style="font-size:10px;color:#94a3b8;cursor:pointer;text-align:center;margin-top:2px" onclick="rsi(${i})">削除</div>`
+                    :`<div class="seq-img-em" onclick="tsu(${i})">＋</div>`
+                  }
+                </td>
+                <td>
+                  <select class="s-sel" onchange="us(${i},'seq',this.value)">
+                    ${SEQS.map(s=>`<option${r.seq===s?' selected':''}>${s}</option>`).join('')}
+                  </select>
+                </td>
+                <td>
+                  <input class="s-inp" value="${r.plane}${r.note?' / '+r.note:''}" placeholder="sag / FS..." onchange="usp(${i},this.value)">
+                  <button class="memo-btn" onclick="toggleMemo(${i})">
+                    📝 メモ${hasMemo?'<span class="memo-dot"></span>':''}
+                  </button>
+                </td>
+                <td><select class="s-sel" onchange="us(${i},'fov',this.value)">${FOVS.map(f=>`<option${r.fov===f?' selected':''}>${f}</option>`).join('')}</select></td>
+                <td><select class="s-sel" onchange="us(${i},'thick',this.value)">${THICKS.map(t=>`<option${r.thick===t?' selected':''}>${t}</option>`).join('')}</select></td>
+                <td><select class="s-sel" onchange="us(${i},'phase',this.value)">${PHASES.map(ph=>`<option${r.phase===ph?' selected':''}>${ph}</option>`).join('')}</select></td>
+                <td><button class="row-del" onclick="ds(${i})">✕</button></td>
+              </tr>
+              <tr id="memo-tr-${i}" style="display:${memoOpen?'':'none'}">
+                <td colspan="8" style="padding:0">
+                  <div class="memo-inner" style="padding:10px 12px 10px 46px;background:#fffbeb;border-top:1.5px solid #fcd34d">
+                    <textarea class="memo-ta" placeholder="注意点・ポイント・撮像条件の補足..." onchange="us(${i},'memo',this.value)">${r.memo||''}</textarea>
+                    <button class="memo-close" onclick="toggleMemo(${i})">✕ 閉じる</button>
+                  </div>
+                </td>
+              </tr>`;
+            }).join('')}
+          </tbody>
+        </table>
+        <div class="add-seq-bar">
+          <select id="as-seq">${SEQS.map(s=>`<option>${s}</option>`).join('')}</select>
+          <input id="as-pl" placeholder="断面 / メモ（例: sag / FS）">
+          <select id="as-fov">${FOVS.map(f=>`<option${f==='240'?' selected':''}>${f}</option>`).join('')}</select>
+          <select id="as-th">${THICKS.map(t=>`<option${t==='3'?' selected':''}>${t}</option>`).join('')}</select>
+          <select id="as-ph">${PHASES.map(ph=>`<option>${ph}</option>`).join('')}</select>
+          <select id="as-ty"><option value="routine">ルーチン</option><option value="option">オプション</option></select>
+          <button class="tbtn tbtn-p" style="min-height:44px;border-radius:8px;padding:0 16px" onclick="addSeq()">＋ 追加</button>
+        </div>
+      </div>
+    </div>
+    <div class="bottom-bar">
+      <button class="reset-btn" onclick="rc()">↺ チェックリセット</button>
+    </div>
+  `;
+
+  // bind add-r enter
+  const nc=document.getElementById('nc');
+  if(nc) nc.addEventListener('keydown',e=>{ if(e.key==='Enter') ac(); });
+}
+
+function is(key,label,h){
+  const p=data.parts[cp]; const src=p.images[key];
+  if(src) return `<div class="img-sl">
+    <div class="img-zone" style="height:${h}px" onclick="tu('${key}')">
+      <img src="${src}" alt="${label}">
+      <div class="img-ov"><span style="font-size:24px">📷</span><span>タップして変更</span></div>
+    </div>
+    <div class="img-sl-lbl">
+      <span>${label}</span>
+      <button class="img-del-btn" onclick="ri('${key}')">削除</button>
+    </div>
+  </div>`;
+  return `<div class="img-sl">
+    <div class="img-zone" style="height:${h}px" onclick="tu('${key}')">
+      <span style="font-size:28px;color:#94a3b8">＋</span>
+      <span style="font-size:12px;color:#64748b;text-align:center;padding:0 8px">${label}</span>
+    </div>
+  </div>`;
+}
+
+function tu(slot){pSlot=slot;pSeq=null;document.getElementById('fi').click()}
+function tsu(i){pSeq=i;pSlot=null;document.getElementById('fi').click()}
+document.getElementById('fi').addEventListener('change',function(){
+  const file=this.files[0];if(!file)return;
+  const r=new FileReader();
+  r.onload=e=>{
+    if(pSeq!==null) data.parts[cp].routine[pSeq].img=e.target.result;
+    else if(pSlot) data.parts[cp].images[pSlot]=e.target.result;
+    save(); render();
+  };
+  r.readAsDataURL(file); this.value='';
+});
+function ri(k){data.parts[cp].images[k]=null;save();render()}
+function rsi(i){data.parts[cp].routine[i].img=null;save();render()}
+function showL(src){document.getElementById('lbox-img').src=src;document.getElementById('lbox').style.display='flex'}
+function us(i,k,v){data.parts[cp].routine[i][k]=v;save()}
+function usp(i,v){const ps=v.split('/');data.parts[cp].routine[i].plane=(ps[0]||'').trim();data.parts[cp].routine[i].note=(ps[1]||'').trim();save()}
+function tt(i){const r=data.parts[cp].routine[i];r.type=r.type==='routine'?'option':'routine';save();render()}
+function toggleMemo(i){
+  const key=cp+'-'+i; openMemos[key]=!openMemos[key];
+  const el=document.getElementById('memo-tr-'+i);
+  if(el) el.style.display=openMemos[key]?'':'none';
+}
+function sp(i){cp=i;openMemos={};render();document.getElementById('scroll').scrollTop=0}
+function tc(i){const p=data.parts[cp];if(!checks[p.id])checks[p.id]={};checks[p.id][i]=!checks[p.id][i]}
+function dc(i){data.parts[cp].positioning.splice(i,1);save();render()}
+function ac(){const v=document.getElementById('nc').value.trim();if(!v)return;data.parts[cp].positioning.push(v);save();render()}
+function ds(i){data.parts[cp].routine.splice(i,1);save();render()}
+function addSeq(){
+  const pl=document.getElementById('as-pl').value.trim();
+  const ps=pl.split('/');
+  data.parts[cp].routine.push({
+    seq:document.getElementById('as-seq').value,
+    plane:(ps[0]||'').trim(),note:(ps[1]||'').trim(),
+    fov:document.getElementById('as-fov').value,
+    thick:document.getElementById('as-th').value,
+    phase:document.getElementById('as-ph').value,
+    type:document.getElementById('as-ty').value,
+    img:null,memo:''
+  });
+  save(); render();
+}
+function rc(){checks[data.parts[cp].id]={};render();toast('チェックをリセットしました')}
+function openAddPart(){document.getElementById('np-name').value='';document.getElementById('mo-part').style.display='flex';setTimeout(()=>document.getElementById('np-name').focus(),100)}
+function cm(id){document.getElementById(id).style.display='none'}
+function addPart(){
+  const name=document.getElementById('np-name').value.trim();if(!name)return;
+  data.parts.push({id:'p'+Date.now(),name,coil:'（コイルを設定）',images:{pos:null,sag:null,tra:null,c1:null,c2:null,c3:null},positioning:[],routine:[]});
+  cp=data.parts.length-1;cm('mo-part');save();render();
+}
+function openCoilEdit(){document.getElementById('coil-val').value=data.parts[cp].coil;document.getElementById('mo-coil').style.display='flex';setTimeout(()=>document.getElementById('coil-val').focus(),100)}
+function saveCoil(){const v=document.getElementById('coil-val').value.trim();if(v)data.parts[cp].coil=v;cm('mo-coil');save();render()}
+function exportData(){
+  const lines=['# MRI撮像マニュアル\n'];
+  data.parts.forEach(p=>{
+    lines.push(`## ${p.name}\n使用コイル: ${p.coil}\n`);
+    lines.push('### ポジショニング');
+    p.positioning.forEach(c=>lines.push(`- □ ${c}`));
+    lines.push('\n### ROUTINEシーケンス');
+    lines.push('| 種別 | シーケンス | 断面 | メモ | FOV | Thickness | 位相方向 | 注意点 |');
+    lines.push('|---|---|---|---|---|---|---|---|');
+    p.routine.forEach(r=>lines.push(`| ${r.type==='routine'?'ルーチン':'オプション'} | ${r.seq} | ${r.plane} | ${r.note||''} | ${r.fov} | ${r.thick} | ${r.phase} | ${r.memo||''} |`));
+    lines.push('');
+  });
+  const blob=new Blob([lines.join('\n')],{type:'text/markdown'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='mri_manual.md';a.click();
+  toast('エクスポートしました');
+}
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){cm('mo-part');cm('mo-coil');document.getElementById('lbox').style.display='none'}
+});
+render();
+</script>
+</body>
+</html>
