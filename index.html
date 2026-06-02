@@ -58,9 +58,9 @@ body{font-family:'Hiragino Kaku Gothic ProN','Hiragino Sans',Meiryo,sans-serif;b
 .lockout-msg{background:var(--red-lt);border:1.5px solid var(--red-bd);border-radius:var(--radius-sm);padding:12px;font-size:13px;color:var(--red);margin-bottom:12px;text-align:center}
 
 /* topbar */
-.topbar{background:var(--blue);color:#fff;padding:0 1rem;height:56px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,0.2)}
+.topbar{background:var(--blue);color:#fff;padding:0 1rem;height:56px;display:flex;align-items:center;gap:8px;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,0.2)}
 .topbar h1{font-size:15px;font-weight:500}
-.topbar-right{display:flex;align-items:center;gap:8px}
+.topbar-right{display:flex;align-items:center;gap:8px;margin-left:auto;flex-shrink:0}
 .user-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.15);padding:5px 12px;border-radius:20px;font-size:13px;font-weight:500;cursor:pointer;border:1.5px solid rgba(255,255,255,0.25)}
 .admin-badge{background:rgba(220,38,38,0.3);border-color:rgba(220,38,38,0.5)}
 .tbtn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:40px;padding:0 14px;border-radius:var(--radius-sm);border:1.5px solid rgba(255,255,255,0.25);background:transparent;font-size:14px;cursor:pointer;color:#fff;font-family:inherit}
@@ -114,8 +114,8 @@ body{font-family:'Hiragino Kaku Gothic ProN','Hiragino Sans',Meiryo,sans-serif;b
 .img-sl-lbl span{font-size:12px;color:var(--gray5);font-weight:500}
 .img-del-btn{font-size:12px;padding:3px 8px;border-radius:5px;border:1px solid var(--gray3);background:#fff;color:var(--gray5);cursor:pointer;font-family:inherit}
 .seq-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
-.seq-table{width:100%;min-width:700px;border-collapse:collapse;table-layout:fixed}
-.seq-table th{background:var(--gray1);font-size:12px;font-weight:600;color:var(--gray5);padding:9px 10px;text-align:left;border-bottom:1px solid var(--gray3);white-space:nowrap}
+.seq-table{width:100%;min-width:560px;border-collapse:collapse;table-layout:fixed}
+.seq-table th{background:var(--gray1);font-size:12px;font-weight:600;color:var(--gray5);padding:9px 10px;text-align:left;border-bottom:1px solid var(--gray3)}
 .seq-table td{padding:6px 8px;border-bottom:1px solid var(--gray2);vertical-align:middle}
 .seq-table tr:last-child td{border-bottom:none}
 .type-cell{padding:0!important;width:36px}
@@ -173,12 +173,57 @@ body{font-family:'Hiragino Kaku Gothic ProN','Hiragino Sans',Meiryo,sans-serif;b
 .circle-lbl{font-size:10px;color:var(--gray4)}
 /* seq mastery check */
 .mastery-cell{text-align:center}
-.mastery-btn{width:32px;height:32px;border-radius:50%;border:2px solid var(--gray3);background:#fff;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;font-size:14px;transition:all 0.15s;flex-shrink:0}
-.mastery-btn.done{background:#dcfce7;border-color:#4ade80;color:#16a34a}
+.mastery-btn{width:36px;height:36px;border-radius:6px;border:2px solid var(--gray3);background:#fff;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;font-size:16px;transition:all 0.15s;flex-shrink:0;font-family:inherit}
 .mastery-btn:active{transform:scale(0.9)}
+.mastery-0{border-color:var(--gray3);background:#fff;color:transparent}
+.mastery-1{border-color:#f59e0b;background:#fffbeb;color:#f59e0b}
+.mastery-2{border-color:#2563eb;background:#eff6ff;color:#2563eb}
+.mastery-3{border-color:#16a34a;background:#f0fdf4;color:#16a34a}
 /* back btn */
-.back-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:var(--radius-sm);border:1.5px solid rgba(255,255,255,0.25);background:transparent;font-size:14px;cursor:pointer;color:#fff;font-family:inherit}
+.back-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:var(--radius-sm);border:1.5px solid rgba(255,255,255,0.25);background:transparent;font-size:14px;cursor:pointer;color:#fff;font-family:inherit;white-space:nowrap;flex-shrink:0}
 .back-btn:active{background:rgba(255,255,255,0.15)}
+#topbar-part-tabs{display:flex;align-items:stretch;flex:1;overflow-x:auto;-webkit-overflow-scrolling:touch}
+#topbar-part-tabs::-webkit-scrollbar{display:none}
+.topbar-part-tab{padding:0 18px;height:56px;display:inline-flex;align-items:center;font-size:14px;font-weight:500;cursor:pointer;border:none;background:transparent;color:rgba(255,255,255,0.55);border-bottom:3px solid transparent;white-space:nowrap;font-family:inherit;flex-shrink:0;transition:all 0.15s;letter-spacing:0.05em;overflow:visible}
+.topbar-part-tab.active{color:#fff;border-bottom-color:#fff;font-weight:500}
+.topbar-part-tab:active{background:rgba(255,255,255,0.1)}
+/* mode select */
+.mode-part-tabs{background:#fff;border-bottom:1px solid var(--gray3);display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;flex-shrink:0}
+.mode-part-tabs::-webkit-scrollbar{display:none}
+.mode-part-tab{padding:0 20px;height:48px;display:inline-flex;align-items:center;font-size:15px;font-weight:500;cursor:pointer;border:none;background:none;color:var(--gray5);border-bottom:3px solid transparent;white-space:nowrap;font-family:inherit;flex-shrink:0;transition:all 0.15s;letter-spacing:0.03em}
+.mode-part-tab.active{color:var(--blue2);border-bottom-color:var(--blue2);font-weight:500}
+.mode-part-tab:active{background:var(--gray1)}
+.mode-screen{padding:1rem;display:flex;flex-direction:column;gap:14px}
+.mode-part-name{font-size:20px;font-weight:600;color:var(--blue);padding:0 2px}
+.mode-grid{display:flex;flex-direction:column;gap:10px}
+.mode-card{background:#fff;border-radius:var(--radius);padding:18px 20px;box-shadow:0 1px 4px rgba(0,0,0,0.08);display:flex;align-items:center;gap:16px;cursor:pointer;border-left:5px solid transparent;transition:all 0.15s}
+.mode-card:active{transform:scale(0.98);box-shadow:0 1px 2px rgba(0,0,0,0.06)}
+.mode-icon{font-size:28px;flex-shrink:0}
+.mode-info{flex:1}
+.mode-name{font-size:16px;font-weight:600;color:var(--text);margin-bottom:3px}
+.mode-desc{font-size:13px;color:var(--gray5);line-height:1.5}
+.mode-arrow{font-size:18px;color:var(--gray4)}
+/* mode banner */
+.mode-banner{margin:0 0 12px;padding:12px 16px;border-radius:var(--radius-sm);display:flex;align-items:flex-start;gap:10px;border-left:4px solid}
+.mode-banner-icon{font-size:20px;flex-shrink:0}
+.mode-banner-text{font-size:13px;line-height:1.6;font-weight:500}
+/* mode badges */
+.mode-badges{display:flex;flex-direction:column;gap:8px;padding:12px 16px;background:#fff;border-bottom:1px solid var(--gray3)}
+.mode-badges-comment{font-size:12px;color:var(--gray4);letter-spacing:0.02em}
+.mode-badges-row{display:flex;gap:8px;flex-wrap:wrap}
+.mode-badge{display:inline-flex;align-items:center;gap:5px;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:500;cursor:pointer;border:1.5px solid;transition:all 0.15s;white-space:nowrap}
+.mode-badge:active{opacity:0.7;transform:scale(0.97)}
+.mode-badge-routine{color:#2563eb;border-color:#2563eb;background:#eff6ff}
+/* mode popup */
+.mode-popup-bg{position:fixed;inset:0;background:rgba(0,0,0,0.4);display:flex;align-items:flex-end;justify-content:center;z-index:150;padding:0}
+.mode-popup{background:#fff;border-radius:20px 20px 0 0;padding:24px;width:100%;max-width:600px;box-shadow:0 -8px 32px rgba(0,0,0,0.15)}
+.mode-popup-handle{width:40px;height:4px;background:var(--gray3);border-radius:2px;margin:0 auto 16px}
+.mode-popup-header{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.mode-popup-icon{font-size:32px}
+.mode-popup-title{font-size:20px;font-weight:600}
+.mode-popup-desc{font-size:15px;color:var(--gray6);line-height:1.7}
+.mode-popup-close{width:100%;min-height:48px;margin-top:20px;border-radius:var(--radius-sm);border:1.5px solid var(--gray3);background:#fff;font-size:15px;color:var(--gray5);cursor:pointer;font-family:inherit}
+.mode-popup-close:active{background:var(--gray2)}
 </style>
 </head>
 <body>
@@ -231,10 +276,9 @@ body{font-family:'Hiragino Kaku Gothic ProN','Hiragino Sans',Meiryo,sans-serif;b
 
 <div id="main-app" style="display:none;flex-direction:column;height:100%">
   <div class="topbar">
-    <div style="display:flex;align-items:center;gap:8px">
-      <button class="back-btn" id="back-btn" style="display:none" onclick="window.showDashboard()">← ダッシュボード</button>
-      <h1 id="topbar-title">🏥 MRI 撮像マニュアル</h1>
-    </div>
+    <button class="back-btn" id="back-btn" style="display:none" onclick="window.showDashboard()">← BACK</button>
+    <div id="topbar-part-tabs" style="display:none;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;flex:1"></div>
+    <h1 id="topbar-title">🏥 MRI 撮像マニュアル</h1>
     <div class="topbar-right">
       <span class="sync-ind" id="sync-ind"></span>
       <div class="user-badge" id="user-badge" onclick="showLogout()">👤 <span id="user-name-disp"></span></div>
@@ -244,6 +288,7 @@ body{font-family:'Hiragino Kaku Gothic ProN','Hiragino Sans',Meiryo,sans-serif;b
   <div class="tab-strip" id="tabs"></div>
   <div class="scroll" id="scroll">
     <div id="dashboard"></div>
+    <div id="mode-screen" style="display:none"></div>
     <div id="content" style="display:none"></div>
   </div>
 </div>
@@ -289,6 +334,17 @@ body{font-family:'Hiragino Kaku Gothic ProN','Hiragino Sans',Meiryo,sans-serif;b
 </div>
 <div class="lbox" id="lbox" style="display:none" onclick="this.style.display='none'">
   <img id="lbox-img" src="" alt="拡大">
+</div>
+<div class="mode-popup-bg" id="mode-popup-bg" style="display:none" onclick="closeModePopup()">
+  <div class="mode-popup" onclick="event.stopPropagation()">
+    <div class="mode-popup-handle"></div>
+    <div class="mode-popup-header">
+      <div class="mode-popup-icon" id="mode-popup-icon"></div>
+      <div class="mode-popup-title" id="mode-popup-title"></div>
+    </div>
+    <div class="mode-popup-desc" id="mode-popup-desc"></div>
+    <button class="mode-popup-close" onclick="closeModePopup()">閉じる</button>
+  </div>
 </div>
 <input type="file" id="fi" accept="image/*" style="display:none">
 <div class="toast" id="toast"></div>
@@ -379,26 +435,47 @@ const PHASES=['AP','RL','HF'];
 const SEQS=['T2','T1','STIR','PD','DESS','Myelo','ABER','T2*','その他'];
 
 const DEFAULT_MASTER = {parts:[
-  {id:'ls',name:'L-spine',coil:'SPINE',
+  {id:'ls',name:'L-SPINE',coil:'SPINE',
    images:{pos:null,sag:null,tra:null,c1:null,c2:null,c3:null},
    positioning:['仰向けとし、身体の正中と寝台中心を合わせる','両肩・骨盤が水平になるよう調整し、腰椎のねじれを防ぐ','膝下にクッションを入れ、腰椎前弯を軽減する','撮像中心はL3付近とし、コイル中心を一致させる','腕は体側または腹部上に置く'],
    routine:[
-    {seq:'T2',plane:'sag',note:'',fov:'300',thick:'3',phase:'AP',type:'routine',img:null},
-    {seq:'STIR',plane:'sag',note:'',fov:'300',thick:'3',phase:'AP',type:'routine',img:null},
-    {seq:'T1',plane:'sag',note:'',fov:'300',thick:'3',phase:'AP',type:'routine',img:null},
-    {seq:'T2',plane:'tra',note:'',fov:'240',thick:'4',phase:'RL',type:'routine',img:null},
-    {seq:'STIR',plane:'tra',note:'FS',fov:'240',thick:'4',phase:'RL',type:'option',img:null},
+    {seq:'T2sag',plane:'sag',note:'',fov:'300',thick:'3',phase:'AP',type:'routine',img:null},
+    {seq:'STIRsag',plane:'sag',note:'',fov:'300',thick:'3',phase:'AP',type:'routine',img:null},
+    {seq:'T1sag',plane:'sag',note:'',fov:'300',thick:'3',phase:'AP',type:'routine',img:null},
+    {seq:'T2tra',plane:'tra',note:'',fov:'240',thick:'4',phase:'RL',type:'routine',img:null},
+    {seq:'STIRtra',plane:'tra',note:'FS',fov:'240',thick:'4',phase:'RL',type:'option',img:null},
     {seq:'Myelo',plane:'cor',note:'',fov:'360',thick:'3D',phase:'HF',type:'option',img:null},
+   ],
+   modes:[
+    {id:'routine',name:'ルーチン',icon:'📋',color:'#2563eb',desc:'',useRoutine:true,routine:[],selectable:true,
+     badges:[
+      {name:'FAST',icon:'⚡',color:'#f59e0b',desc:'高速モード。疼痛が強い患者・閉所恐怖症の患者に使用。撮像時間を短縮するためパラメータを調整します。シーケンスはルーチンと同じです。'},
+      {name:'QUIET',icon:'🔇',color:'#8b5cf6',desc:'静音モード。音に敏感な患者に使用。シーケンス内容はルーチンと同じですが騒音レベルを低減します。'},
+      {name:'WARP',icon:'🔩',color:'#64748b',desc:'金属アーチファクト軽減モード。後方固定術後など金属インプラントがある患者に使用。シーケンスはルーチンと同じです。'},
+     ]},
+    {id:'stress',name:'疲労骨折',icon:'🦴',color:'#ef4444',desc:'疲労骨折・分離症など骨髄浮腫の評価に特化したシーケンス構成です。',useRoutine:false,selectable:true,routine:[
+      {seq:'STIRsag',plane:'sag',note:'',fov:'300',thick:'3',phase:'AP',type:'routine',img:null},
+      {seq:'T1sag',plane:'sag',note:'',fov:'300',thick:'3',phase:'AP',type:'routine',img:null},
+      {seq:'STIRcor',plane:'cor',note:'',fov:'360',thick:'4',phase:'HF',type:'routine',img:null},
+      {seq:'T2tra',plane:'tra',note:'FS',fov:'240',thick:'4',phase:'RL',type:'option',img:null},
+    ]},
    ]},
-  {id:'sh',name:'Shoulder',coil:'SMALL FLX',
+  {id:'sh',name:'SHOULDER',coil:'SMALL FLX',
    images:{pos:null,sag:null,tra:null,c1:null,c2:null,c3:null},
    positioning:['仰向けまたは側臥位とし、撮像側の肩を寝台端に合わせる','上肢を体側に沿わせ、手掌を大腿外側に向ける（外旋位）','肩関節が動かないよう固定し、動きを最小化する','撮像中心は肩峰とし、コイル中心を一致させる','フレックスコイルを肩関節に密着させて固定する'],
    routine:[
-    {seq:'T2',plane:'sag',note:'',fov:'200',thick:'3',phase:'AP',type:'routine',img:null},
-    {seq:'T1',plane:'sag',note:'',fov:'200',thick:'3',phase:'AP',type:'routine',img:null},
-    {seq:'STIR',plane:'cor',note:'',fov:'200',thick:'3',phase:'HF',type:'routine',img:null},
-    {seq:'PD',plane:'tra',note:'FS',fov:'160',thick:'3',phase:'AP',type:'routine',img:null},
+    {seq:'T2sag',plane:'sag',note:'',fov:'200',thick:'3',phase:'AP',type:'routine',img:null},
+    {seq:'T1sag',plane:'sag',note:'',fov:'200',thick:'3',phase:'AP',type:'routine',img:null},
+    {seq:'STIRcor',plane:'cor',note:'',fov:'200',thick:'3',phase:'HF',type:'routine',img:null},
+    {seq:'PDtra',plane:'tra',note:'FS',fov:'160',thick:'3',phase:'AP',type:'routine',img:null},
     {seq:'ABER',plane:'oblique',note:'外転外旋位',fov:'160',thick:'3',phase:'AP',type:'option',img:null},
+   ],
+   modes:[
+    {id:'routine',name:'ルーチン',icon:'📋',color:'#2563eb',desc:'',useRoutine:true,routine:[],selectable:true,
+     badges:[
+      {name:'FAST',icon:'⚡',color:'#f59e0b',desc:'高速モード。疼痛が強い患者・閉所恐怖症の患者に使用。シーケンスはルーチンと同じです。'},
+      {name:'QUIET',icon:'🔇',color:'#8b5cf6',desc:'静音モード。音に敏感な患者に使用。シーケンス内容はルーチンと同じです。'},
+     ]},
    ]}
 ]};
 
@@ -406,7 +483,7 @@ let masterData = JSON.parse(JSON.stringify(DEFAULT_MASTER));
 let currentUser = null;
 let isAdmin = false;
 let userData = {checks:{}, memos:{}};
-let cp = 0, openMemos = {}, pSlot = null, pSeq = null;
+let cp = 0, currentMode = null, openMemos = {}, pSlot = null, pSeq = null;
 
 // ============================================================
 // Firebase
@@ -414,8 +491,19 @@ let cp = 0, openMemos = {}, pSlot = null, pSeq = null;
 async function loadMaster(){
   try{
     const snap = await getDoc(doc(db,'manual','master'));
-    if(snap.exists()) masterData = snap.data();
-    else await setDoc(doc(db,'manual','master'), masterData);
+    if(snap.exists()){
+      masterData = snap.data();
+      // Firestoreの古いデータにmodesがない場合はDEFAULT_MASTERからマージ
+      masterData.parts = masterData.parts.map((p,i)=>{
+        if(!p.modes || p.modes.length===0){
+          const def = DEFAULT_MASTER.parts.find(d=>d.id===p.id);
+          if(def && def.modes) p.modes = def.modes;
+        }
+        return p;
+      });
+    } else {
+      await setDoc(doc(db,'manual','master'), masterData);
+    }
   }catch(e){ console.warn('Firestore load error'); }
 }
 async function saveMasterToFirestore(){
@@ -442,7 +530,22 @@ async function saveUserDataToFirestore(){
 }
 function listenMaster(){
   onSnapshot(doc(db,'manual','master'), snap=>{
-    if(snap.exists()){ masterData=snap.data(); if(currentUser){ if(document.getElementById('content').style.display!=='none') render(); else window.renderDashboard(); } }
+    if(snap.exists()){
+      masterData=snap.data();
+      // modesマージ
+      masterData.parts=masterData.parts.map((p,i)=>{
+        if(!p.modes||p.modes.length===0){
+          const def=DEFAULT_MASTER.parts.find(d=>d.id===p.id);
+          if(def&&def.modes) p.modes=def.modes;
+        }
+        return p;
+      });
+      if(currentUser){
+        if(document.getElementById('content').style.display!=='none') render();
+        else if(document.getElementById('mode-screen').style.display!=='none') window.showModeSelect(cp);
+        else window.renderDashboard();
+      }
+    }
   });
 }
 
@@ -583,15 +686,45 @@ window.quickLogin = function(name){
 // ============================================================
 function render(){
   document.getElementById('tabs').innerHTML=
-    masterData.parts.map((p,i)=>`<button class="tab${i===cp?' active':''}" onclick="sp(${i})">${sanitize(p.name)}</button>`).join('')+
+    masterData.parts.map((p,i)=>`<button class="tab${i===cp?' active':''}" onclick="window.showContent(${i},null)">${sanitize(p.name).toUpperCase()}</button>`).join('')+
     (isAdmin?`<button class="tab-add" onclick="openAddPart()">＋</button>`:'');
 
   const p = masterData.parts[cp];
   const pid = p.id;
   if(!userData.checks[pid]) userData.checks[pid]={};
   if(!userData.memos[pid]) userData.memos[pid]={};
+  if(!userData.mastery) userData.mastery={};
+  if(!userData.mastery[pid]) userData.mastery[pid]={};
+
+  // モードに応じてシーケンスを決定
+  let activeMode = null;
+  let activeRoutine = p.routine || [];
+  let isRoutineMode = true;
+  if(currentMode !== null && p.modes && p.modes[currentMode]){
+    activeMode = p.modes[currentMode];
+    isRoutineMode = (activeMode.id === 'routine' || activeMode.useRoutine);
+    if(!activeMode.useRoutine && activeMode.routine && activeMode.routine.length > 0){
+      activeRoutine = activeMode.routine;
+    } else {
+      activeRoutine = p.routine || [];
+    }
+  }
 
   document.getElementById('content').innerHTML=`
+    ${(activeMode&&activeMode.badges&&activeMode.badges.length>0)?`
+    <div class="mode-badges">
+      <div class="mode-badges-comment">患者に合わせてモードを確認してください</div>
+      <div class="mode-badges-row">
+        <button class="mode-badge mode-badge-routine" onclick="window.openModePopup('📋','ROUTINE','標準撮像プロトコルです。このページのシーケンスを通常通り実施してください。')">
+          📋 ROUTINE
+        </button>
+        ${activeMode.badges.map(b=>`
+          <button class="mode-badge" style="color:${b.color};border-color:${b.color};background:${b.color}18"
+            onclick="window.openModePopup('${b.icon}','${b.name}','${b.desc}')">
+            ${b.icon} ${b.name}
+          </button>`).join('')}
+      </div>
+    </div>`:''}
     <div class="card">
       <div class="sec-hdr s-pos"><span class="sec-lbl">📋 ポジショニング</span></div>
       <div class="coil-badge${isAdmin?' editable':''}" onclick="${isAdmin?'openCoilEdit()':''}">
@@ -631,28 +764,47 @@ function render(){
       </div>
       <div class="seq-scroll">
         <table class="seq-table">
+          <colgroup>
+            <col style="width:32px">
+            <col style="width:44px">
+            <col style="width:52px">
+            <col style="width:100px">
+            <col>
+            <col style="width:68px">
+            <col style="width:84px">
+            <col style="width:72px">
+            ${isAdmin?'<col style="width:32px">':''}
+          </colgroup>
           <thead><tr>
-            <th style="width:32px"></th>
-            <th style="width:40px;text-align:center">習得</th>
-            <th style="width:48px">画像</th>
-            <th style="width:90px">シーケンス</th>
-            <th style="min-width:160px">memo</th>
-            <th style="width:64px">FOV</th>
-            <th style="width:80px">Thickness</th>
-            <th style="width:68px">位相方向</th>
-            ${isAdmin?'<th style="width:32px"></th>':''}
+            <th></th>
+            <th style="text-align:center">習得</th>
+            <th>画像</th>
+            <th>シーケンス</th>
+            <th>memo</th>
+            <th>FOV</th>
+            <th>Thickness</th>
+            <th>位相方向</th>
+            ${isAdmin?'<th></th>':''}
           </tr></thead>
           <tbody>
-            ${p.routine.map((r,i)=>{
+            ${activeRoutine.map((r,i)=>{
               const memoOpen=openMemos[cp+'-'+i];
               const myMemo=userData.memos[pid][i]||'';
               const hasMemo=myMemo.trim();
+              const mastLevel=(userData.mastery&&userData.mastery[pid]&&userData.mastery[pid][i])||0;
+              const mastSymbol=['','△','○','◎'][mastLevel];
+              const mastClass=['mastery-0','mastery-1','mastery-2','mastery-3'][mastLevel];
               return `<tr>
                 <td class="type-cell">
                   <div class="type-bar-wrap${isAdmin?' editable':''}" onclick="${isAdmin?`tt(${i})`:''}" title="${isAdmin?'タップで切替':''}">
                     <div class="type-bar ${r.type==='routine'?'bar-r':'bar-o'}"></div>
                   </div>
                 </td>
+                ${isRoutineMode?`<td class="mastery-cell">
+                  <button class="mastery-btn ${mastClass}" onclick="toggleMastery(${i})" title="□→△→○→◎">
+                    ${mastSymbol}
+                  </button>
+                </td>`:'<td></td>'}
                 <td style="padding:6px">
                   ${r.img
                     ?`<img class="seq-img-th" src="${r.img}" onclick="showL('${r.img}')" alt="seq">
@@ -815,7 +967,7 @@ window.cm=function(id){document.getElementById(id).style.display='none'};
 window.addPart=async function(){
   const name=sanitize(document.getElementById('np-name').value.trim());if(!name)return;
   masterData.parts.push({id:'p'+Date.now(),name,coil:'HEAD',images:{pos:null,sag:null,tra:null,c1:null,c2:null,c3:null},positioning:[],routine:[]});
-  cp=masterData.parts.length-1;cm('mo-part');await saveMasterToFirestore();render();
+  cp=masterData.parts.length-1;currentMode=null;cm('mo-part');await saveMasterToFirestore();window.showDashboard();
 };
 window.openCoilEdit=function(){const sel=document.getElementById('coil-val');sel.value=masterData.parts[cp].coil;if(!sel.value) sel.selectedIndex=0;document.getElementById('mo-coil').style.display='flex';};
 window.saveCoil=async function(){const v=document.getElementById('coil-val').value;if(v)masterData.parts[cp].coil=v;cm('mo-coil');await saveMasterToFirestore();render()};
@@ -829,21 +981,84 @@ document.addEventListener('keydown',e=>{
 // ダッシュボード
 // ============================================================
 window.showDashboard=function(){
+  currentMode=null; openMemos={};
   document.getElementById('dashboard').style.display='block';
+  document.getElementById('mode-screen').style.display='none';
   document.getElementById('content').style.display='none';
   document.getElementById('tabs').style.display='none';
   document.getElementById('back-btn').style.display='none';
+  document.getElementById('topbar-part-tabs').style.display='none';
+  document.getElementById('topbar-title').style.display='';
   document.getElementById('topbar-title').textContent='🏥 MRI 撮像マニュアル';
-  renderDashboard();
+  window.renderDashboard();
 }
 
 window.showPart=function(i){
   cp=i; openMemos={};
+  const p=masterData.parts[i];
+  // modesがない部位は直接シーケンス表示
+  if(!p.modes||p.modes.length===0){
+    window.showContent(i,null);
+  } else {
+    window.showModeSelect(i);
+  }
+}
+
+window.showModeSelect=function(i){
+  cp=i;
+  const p=masterData.parts[i];
   document.getElementById('dashboard').style.display='none';
-  document.getElementById('content').style.display='block';
-  document.getElementById('tabs').style.display='flex';
+  document.getElementById('mode-screen').style.display='block';
+  document.getElementById('content').style.display='none';
+  document.getElementById('tabs').style.display='none';
   document.getElementById('back-btn').style.display='flex';
-  document.getElementById('topbar-title').textContent=masterData.parts[i].name;
+  document.getElementById('back-btn').onclick=function(){ window.showDashboard(); };
+  document.getElementById('topbar-title').style.display='none';
+  // topbarにpart tabs表示
+  const partTabsEl=document.getElementById('topbar-part-tabs');
+  partTabsEl.style.display='block';
+  partTabsEl.innerHTML=masterData.parts.map((pt,pi)=>
+    `<button class="topbar-part-tab${pi===i?' active':''}" onclick="window.showModeSelect(${pi})">${sanitize(pt.name).toUpperCase()}</button>`
+  ).join('');
+  document.getElementById('scroll').scrollTop=0;
+
+  const modes=p.modes||[];
+  document.getElementById('mode-screen').innerHTML=`
+    <div class="mode-screen">
+      <div class="mode-part-name">📁 ${sanitize(p.name).toUpperCase()} — シーケンスを選択</div>
+      <div class="mode-grid">
+        ${modes.filter(m=>m.selectable!==false).map((m,mi)=>{
+          const realIdx=modes.indexOf(m);
+          return `<div class="mode-card" style="border-left-color:${m.color}" onclick="window.showContent(${i},${realIdx})">
+            <div class="mode-icon">${m.icon}</div>
+            <div class="mode-info">
+              <div class="mode-name" style="color:${m.color}">${sanitize(m.name)}</div>
+              ${m.desc?`<div class="mode-desc">${sanitize(m.desc)}</div>`:'<div class="mode-desc">通常のシーケンスで撮像します</div>'}
+            </div>
+            <div class="mode-arrow">›</div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+}
+
+window.showContent=function(partIdx, modeIdx){
+  cp=partIdx; currentMode=modeIdx; openMemos={};
+  document.getElementById('dashboard').style.display='none';
+  document.getElementById('mode-screen').style.display='none';
+  document.getElementById('content').style.display='block';
+  document.getElementById('tabs').style.display='none';
+  document.getElementById('topbar-part-tabs').style.display='none';
+  document.getElementById('topbar-title').style.display='';
+  document.getElementById('back-btn').style.display='flex';
+  const p=masterData.parts[partIdx];
+  const modeName=modeIdx!==null&&p.modes?p.modes[modeIdx].name:'';
+  document.getElementById('topbar-title').textContent=p.name.toUpperCase()+(modeName?' — '+modeName.toUpperCase():'');
+  // 戻るボタン：モードがあればモード選択へ、なければダッシュボードへ
+  document.getElementById('back-btn').onclick=function(){
+    if(p.modes&&p.modes.length>0) window.showModeSelect(partIdx);
+    else window.showDashboard();
+  };
   render();
   document.getElementById('scroll').scrollTop=0;
 }
@@ -856,13 +1071,17 @@ window.renderDashboard=function(){
       ${masterData.parts.map((p,i)=>{
         const pid=p.id;
         const total=p.routine.length;
-        const done=total>0?(Object.values((userData.mastery&&userData.mastery[pid])||{}).filter(Boolean).length):0;
-        const pct=total>0?Math.round(done/total*100):0;
+        const mastData=(userData.mastery&&userData.mastery[pid])||{};
+        const mastVals=Object.values(mastData).filter(v=>typeof v==='number');
+        const maxScore=total*3;
+        const curScore=mastVals.reduce((a,b)=>a+b,0);
+        const pct=total>0?Math.round(curScore/maxScore*100):0;
+        const done=mastVals.filter(v=>v===3).length;
         const color=pct>=100?'#16a34a':pct>=50?'#2563eb':'#f59e0b';
         const r=43; const circ=2*Math.PI*r;
         const offset=circ-(pct/100*circ);
         return `<div class="dash-card" onclick="window.showPart(${i})">
-          <div class="dash-card-name">${sanitize(p.name)}</div>
+          <div class="dash-card-name">${sanitize(p.name).toUpperCase()}</div>
           <div class="circle-wrap">
             <svg width="96" height="96" viewBox="0 0 96 96">
               <circle class="circle-bg" cx="48" cy="48" r="${r}"/>
@@ -885,18 +1104,30 @@ window.renderDashboard=function(){
 }
 
 // 習得トグル
+window.openModePopup = function(icon, name, desc){
+  document.getElementById('mode-popup-icon').textContent = icon;
+  document.getElementById('mode-popup-title').textContent = name;
+  document.getElementById('mode-popup-desc').textContent = desc;
+  document.getElementById('mode-popup-bg').style.display = 'flex';
+};
+window.closeModePopup = function(){
+  document.getElementById('mode-popup-bg').style.display = 'none';
+};
+
 window.toggleMastery = async function(i){
   const pid=masterData.parts[cp].id;
   if(!userData.mastery) userData.mastery={};
   if(!userData.mastery[pid]) userData.mastery[pid]={};
-  userData.mastery[pid][i]=!userData.mastery[pid][i];
+  const cur=(userData.mastery[pid][i])||0;
+  userData.mastery[pid][i]=(cur+1)%4;
   await saveUserDataToFirestore();
-  // ボタンだけ即更新
-  const btn=document.querySelectorAll('.mastery-btn')[i];
-  if(btn){
-    const done=userData.mastery[pid][i];
-    btn.className='mastery-btn'+(done?' done':'');
-    btn.textContent=done?'✓':'';
+  const lv=userData.mastery[pid][i];
+  const syms=['','△','○','◎'];
+  const cls=['mastery-0','mastery-1','mastery-2','mastery-3'];
+  const btns=document.querySelectorAll('.mastery-btn');
+  if(btns[i]){
+    btns[i].className='mastery-btn '+cls[lv];
+    btns[i].textContent=syms[lv];
   }
 };
 
