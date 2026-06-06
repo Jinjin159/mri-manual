@@ -44,13 +44,20 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:15
 .admin-link:hover{color:#374151}
 
 /* TOPBAR */
-.topbar{background:var(--bg2);border-bottom:1px solid var(--border);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200}
+.topbar{background:var(--bg2);border-bottom:1px solid var(--border);padding:10px 14px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200}
 .tb-l{display:flex;align-items:center;gap:10px}
+.tb-xp{width:34px;height:34px;border-radius:8px;background:#1e2d40;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;color:#fff;flex-shrink:0;letter-spacing:.02em}
+.tb-title{font-size:13px;font-weight:500;color:var(--text1)}
+.tb-sub{font-size:10px;color:var(--text3)}
+.tb-r{display:flex;align-items:center;gap:8px}
+.tb-divider{width:1px;height:28px;background:var(--border2);margin:0 2px}
+.tb-user-name{font-size:13px;font-weight:500;color:var(--text1)}
+.tb-user-id{font-size:10px;color:var(--text3);font-family:var(--mono)}
 .av{width:32px;height:32px;border-radius:50%;background:var(--blue-bg);border:1px solid var(--blue-border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:var(--blue);flex-shrink:0;font-family:var(--mono)}
 .av-a{background:#fffbeb;border-color:#fde68a;color:#b45309}
 .tb-name{font-weight:500;font-size:14px}
 .tb-id{font-size:11px;color:var(--text3);font-family:var(--mono)}
-.btn-out{padding:5px 12px;border-radius:7px;border:1px solid var(--border2);background:none;font-size:12px;cursor:pointer;color:var(--text2);font-family:var(--font)}
+.btn-out{padding:3px 8px;border-radius:6px;border:0.5px solid var(--border2);background:none;font-size:10px;cursor:pointer;color:var(--text3);font-family:var(--font);letter-spacing:.03em}
 
 /* METRICS */
 .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border-bottom:1px solid var(--border)}
@@ -291,19 +298,46 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:15
 
 <div id="s-staff" class="screen">
   <div class="topbar">
-    <div class="tb-l"><div class="av" id="sav">??</div><div><div class="tb-name" id="snm">-</div><div class="tb-id" id="sid">-</div></div></div>
-    <button class="btn-out" onclick="logout()">ログアウト</button>
+    <div class="tb-l">
+      <div class="tb-xp">XP</div>
+      <div>
+        <div class="tb-title">XP Manual</div>
+        <div class="tb-sub">海の中道整形外科</div>
+      </div>
+    </div>
+    <div class="tb-r">
+      <div class="tb-divider"></div>
+      <div>
+        <div class="tb-user-name" id="snm">-</div>
+        <div class="tb-user-id" id="sid">-</div>
+      </div>
+      <button class="btn-out" onclick="logout()">Sign out</button>
+    </div>
   </div>
   <div id="home-belt-gauge" style="padding:12px 14px 4px;background:var(--bg2)"></div>
   <div style="background:var(--bg2)"><div class="gtabs" id="gtabs"></div></div>
   <div class="bgrid" id="bgrid"></div>
+  <div id="all-list" style="display:none;padding:10px 12px 40px"></div>
 </div>
 
 <!-- DETAIL -->
 <div id="s-detail" class="screen">
   <div class="topbar">
-    <div class="tb-l"><div class="av" id="dav">??</div><div><div class="tb-name" id="dnm">-</div><div class="tb-id" id="did">-</div></div></div>
-    <button class="btn-out" onclick="logout()">ログアウト</button>
+    <div class="tb-l">
+      <div class="tb-xp">XP</div>
+      <div>
+        <div class="tb-title">XP Manual</div>
+        <div class="tb-sub">海の中道整形外科</div>
+      </div>
+    </div>
+    <div class="tb-r">
+      <div class="tb-divider"></div>
+      <div>
+        <div class="tb-user-name" id="dnm">-</div>
+        <div class="tb-user-id" id="did">-</div>
+      </div>
+      <button class="btn-out" onclick="logout()">Sign out</button>
+    </div>
   </div>
   <div class="back-btn" onclick="backToList()">← 部位一覧</div>
   <div class="dtitle" id="dtitle"></div>
@@ -318,8 +352,21 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:15
 <!-- ADMIN -->
 <div id="s-admin" class="screen">
   <div class="topbar">
-    <div class="tb-l"><div class="av av-a">管</div><div><div class="tb-name">管理者</div><div class="tb-id">海の中道整形外科</div></div></div>
-    <button class="btn-out" onclick="logout()">ログアウト</button>
+    <div class="tb-l">
+      <div class="tb-xp">XP</div>
+      <div>
+        <div class="tb-title">XP Manual</div>
+        <div class="tb-sub">海の中道整形外科</div>
+      </div>
+    </div>
+    <div class="tb-r">
+      <div class="tb-divider"></div>
+      <div>
+        <div class="tb-user-name">管理者</div>
+        <div class="tb-user-id">admin</div>
+      </div>
+      <button class="btn-out" onclick="logout()">Sign out</button>
+    </div>
   </div>
   <div class="awrap">
     <div class="admin-tabs">
@@ -1286,11 +1333,12 @@ function logout(){CU=null;document.getElementById('lid').value='';document.getEl
 
 function enterStaff(uid){
   CU=uid;
-  const ini=uid.slice(0,2).toUpperCase();
-  ['sav','dav'].forEach(i=>document.getElementById(i).textContent=ini);
-  ['snm','dnm'].forEach(i=>document.getElementById(i).textContent='ようこそ');
-  ['sid','did'].forEach(i=>document.getElementById(i).textContent=uid);
-  CG=null;show('s-staff');renderGTabs();renderBGrid();updateMetrics();
+  var uname=USERS[uid]||uid;
+  ['snm','dnm'].forEach(i=>{var el=document.getElementById(i);if(el)el.textContent=uname;});
+  ['sid','did'].forEach(i=>{var el=document.getElementById(i);if(el)el.textContent=uid;});
+  CG='脊椎';show('s-staff');renderGTabs();renderBGrid();updateMetrics();
+  var al=document.getElementById('all-list');if(al)al.style.display='none';
+  var bg=document.getElementById('bgrid');if(bg)bg.style.display='';
 }
 
 function updateMetrics(){
@@ -1332,18 +1380,78 @@ function updateMetrics(){
     +'<div>'
     +'<div style="font-size:11px;color:var(--text3);margin-bottom:3px">全体の習得度</div>'
     +'<div style="font-size:15px;font-weight:500;color:var(--text1);margin-bottom:3px">'+pct+'% 達成</div>'
-    +'<div style="font-size:11px;color:var(--text3)">'+don+' / '+tot+' バッジ完了</div>'
+    +'<div style="font-size:11px;color:var(--text3)">'+don+' / '+tot+' View 完了</div>'
     +'</div>'
     +'</div>';
 }
 
-const GROUPS=['全て','脊椎','胸郭・肩','上肢','骨盤','下肢','ストレス','頭部','胸腹部'];
+const GROUPS=['脊椎','胸郭・肩','上肢','骨盤','下肢','ストレス','頭部','胸腹部','全て'];
 function renderGTabs(){
   document.getElementById('gtabs').innerHTML=GROUPS.map(g=>
     `<div class="gtab${((!CG&&g==='全て')||(CG===g))?' active':''}" onclick="selG('${g}')">${g}</div>`
   ).join('')
 }
-function selG(g){CG=g==='全て'?null:g;renderGTabs();renderBGrid()}
+function selG(g){
+  CG=g==='全て'?null:g;
+  renderGTabs();
+  if(g==='全て'){renderAllList();}else{renderBGrid();}
+}
+
+
+function renderAllList(){
+  var bgEl=document.getElementById('bgrid');
+  var al=document.getElementById('all-list');
+  if(!al)return;
+  bgEl.style.display='none';
+  al.style.display='block';
+
+  var catOrder=['脊椎','胸郭・肩','上肢','骨盤','下肢','ストレス','頭部','胸腹部'];
+  var out='';
+
+  var tot=0,don=0;
+  MANUAL.forEach(function(b){
+    getMeViews(b).forEach(function(_,i){
+      var p=vProg(CU,b.id,i);
+      tot+=p.total;don+=p.done;
+    });
+  });
+  var totalPct=tot?Math.round(don/tot*100):0;
+  var totalColor=totalPct>=70?'#0891b2':'var(--text2)';
+  out+='<div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">';
+  out+='<span style="font-size:12px;font-weight:500;color:var(--text1)">全体の習得度</span>';
+  out+='<div style="display:flex;align-items:baseline;gap:4px">';
+  out+='<span style="font-size:16px;font-weight:500;color:var(--text1)">'+don+'</span>';
+  out+='<span style="font-size:11px;color:var(--text3)">/'+tot+' View</span>';
+  out+='<span style="font-size:12px;font-weight:500;color:'+totalColor+';margin-left:4px">'+totalPct+'%</span>';
+  out+='</div></div>';
+
+  catOrder.forEach(function(cat){
+    var parts=MANUAL.filter(function(b){return b.group===cat;});
+    if(parts.length===0)return;
+    out+='<div style="margin-bottom:10px">';
+    out+='<div style="font-size:10px;font-weight:500;color:var(--text3);letter-spacing:.05em;padding:0 2px;margin-bottom:4px">'+cat+'</div>';
+    parts.forEach(function(b){
+      var vws=getMeViews(b);
+      var vDone=vws.filter(function(_,i){return vProg(CU,b.id,i).pct===100;}).length;
+      var vTotal=vws.length;
+      var pct=vTotal?Math.round(vDone/vTotal*100):0;
+      var rowBg=pct>=70?'#cffafe':'var(--bg2)';
+      var en=EN_NAMES[b.id]||'';
+      out+='<div data-bid="'+b.id+'" style="display:flex;align-items:center;padding:7px 10px;border-radius:8px;margin-bottom:3px;background:'+rowBg+';cursor:pointer">';
+      out+='<span style="font-size:12px;font-weight:500;color:var(--text1);width:110px;flex-shrink:0">'+getMeName(b)+'</span>';
+      out+='<span style="font-size:10px;color:var(--text3);flex:1">'+en+'</span>';
+      out+='<span style="font-size:12px;font-weight:500;color:var(--text1)">'+vDone+'</span>';
+      out+='<span style="font-size:10px;color:var(--text3)">/'+vTotal+'</span>';
+      out+='</div>';
+    });
+    out+='</div>';
+  });
+
+  al.innerHTML=out;
+  al.querySelectorAll('[data-bid]').forEach(function(el){
+    el.addEventListener('click',function(){openDetail(this.dataset.bid);});
+  });
+}
 
 function ringColor(pct){
   if(pct===100)return 'url(#rb-ring)';
@@ -1378,6 +1486,8 @@ function makeRing(done,total){
 }
 
 function renderBGrid(){
+  var al=document.getElementById('all-list');if(al)al.style.display='none';
+  var bgEl=document.getElementById('bgrid');if(bgEl)bgEl.style.display='';
   const bs=CG?MANUAL.filter(b=>b.group===CG):MANUAL;
   var html='';
   bs.forEach(function(b){
@@ -1470,9 +1580,9 @@ function renderVC(){
 
   // チェックリスト
   const allDone=CHECKS.every(c=>!!s[vk(CB,CV,c.id)]);
-  const checks=`<div class="sec-label" style="display:flex;align-items:center;justify-content:space-between">
+  const checks=`<div class="sec-label" style="display:flex;align-items:center;gap:10px">
     <span>習熟度チェック</span>
-    <button onclick="toggleAllChecks()" style="font-size:11px;padding:4px 10px;border-radius:20px;border:1px solid ${allDone?'var(--red-border, #f87171)':'var(--blue)'};background:none;color:${allDone?'#f87171':'var(--blue)'};cursor:pointer;font-weight:500">${allDone?'全解除':'一括チェック'}</button>
+    <button onclick="toggleAllChecks()" style="font-size:11px;padding:4px 12px;border-radius:20px;border:1px solid ${allDone?'#f87171':'var(--blue)'};background:${allDone?'none':'var(--blue)'};color:${allDone?'#f87171':'#fff'};cursor:pointer;font-weight:500;flex-shrink:0">${allDone?'全解除':'一括チェック'}</button>
   </div>
   <div class="check-list">
     ${CHECKS.map((c,idx)=>{
